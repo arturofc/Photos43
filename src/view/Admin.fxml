@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+   <children>
+      <ListView layoutY="41.0" prefHeight="562.0" prefWidth="428.0" />
+      <Button layoutX="361.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
+      <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" text="New User" />
+      <Button layoutX="90.0" layoutY="8.0" mnemonicParsing="false" text="Delete User" />
+   </children>
+</AnchorPane>
