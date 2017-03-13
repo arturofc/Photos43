@@ -19,13 +19,13 @@
          </font>
       </Label>
       <TilePane layoutY="79.0" prefHeight="490.0" prefWidth="611.0" />
-      <Pane layoutY="572.0" prefHeight="37.0" prefWidth="611.0">
+      <Pane layoutX="11.0" layoutY="572.0" prefHeight="37.0" prefWidth="600.0">
          <children>
-            <Label layoutX="6.0" layoutY="10.0" prefHeight="17.0" prefWidth="94.0" text="Search Photos:" />
-            <TextField layoutX="109.0" layoutY="5.0" prefHeight="27.0" prefWidth="186.0" promptText="Date" />
-            <TextField layoutX="300.0" layoutY="5.0" prefHeight="27.0" prefWidth="138.0" promptText="TagName" />
-            <TextField layoutX="454.0" layoutY="5.0" prefHeight="27.0" prefWidth="138.0" promptText="TagValue" />
-            <Label layoutX="444.0" layoutY="10.0" prefHeight="17.0" prefWidth="4.0" text=":" />
+            <TextField layoutY="5.0" prefHeight="27.0" prefWidth="203.0" promptText="Date" />
+            <TextField layoutX="207.0" layoutY="5.0" prefHeight="27.0" prefWidth="138.0" promptText="TagName" />
+            <TextField layoutX="349.0" layoutY="5.0" prefHeight="27.0" prefWidth="138.0" promptText="TagValue" />
+            <Label layoutX="345.0" layoutY="10.0" prefHeight="17.0" prefWidth="4.0" text=":" />
+            <Button layoutX="492.0" layoutY="5.0" mnemonicParsing="false" text="Search Photos" />
          </children>
       </Pane>
    </children>
