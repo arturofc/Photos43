@@ -1,0 +1,10 @@
+Workload Split
+Stage Assigned to
+Login Screen     Calin Gilan
+Admin System     Calin Gilan
+User             Arturo Corro
+Search Results   Arturo Corro
+Album            Calin Gilan
+Image            Arturo Corro
+Next Images      Arturo Corro
+Previous Images  Arturo Corro
