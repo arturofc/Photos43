@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
@@ -11,11 +12,11 @@ import java.util.Set;
 /**
  * Created by cal13 on 3/22/2017.
  */
-public class Photo
+public class Photo implements Serializable
 {
-    String name;
-    Set<String> tags;
-    File photoFile;
+    private String name;
+    private Set<String> tags;
+    private File photoFile;
 
     public Photo(String name, Set<String> tags, String path)
     {
@@ -45,8 +46,21 @@ public class Photo
         return toReturn;
     }
 
-    public void updateTags(Set<String> tags)
+    public void addTag(Set<String> tags)
     {
        this.tags.addAll(tags);
     }
+    public void addTag(String tag)
+    {
+        this.tags.add(tag);
+    }
+    private void deleteTag(String tag)
+    {
+        this.tags.remove(tag);
+    }
+    private Set<String> getTags()
+    {
+        return this.tags;
+    }
+
 }
