@@ -34,6 +34,4 @@ public class Photos extends Application
 			launch(args);
 		}
 
-
-
 }
