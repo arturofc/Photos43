@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import view.loginController;
 
 
 
@@ -20,10 +21,15 @@ public class Photos extends Application
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/Login.fxml"));
 			AnchorPane root = (AnchorPane)loader.load();
+
+			loginController lCont = loader.getController();
+			lCont.launch();
+
 			primaryStage.setTitle("Song Library");
 			primaryStage.setScene(new Scene(root));
 			primaryStage.setResizable(false);
 			primaryStage.show();
+
 
 			//unitTest.testAll();
 

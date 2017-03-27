@@ -10,7 +10,7 @@ public class Album
 {
     private String name;
     private Set<Photo> photos;
-    private Person owner;
+    private User owner;
 
     public Album(String name)
     {

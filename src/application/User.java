@@ -16,13 +16,23 @@ public class User implements Serializable
     private String name;
     private String username;
     private String password;
+    private boolean isAdmin;
 
-    public User (String name, String username, String password)
+    public User(String name, String username, String password)
     {
 
         this.name = name;
         this.username = username;
         this.password = password;
+        this.isAdmin = false;
+    }
+    public User(String name, String username, String password, boolean isAdmin)
+    {
+
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
 
 
@@ -35,6 +45,7 @@ public class User implements Serializable
     {
         return (password.compareTo(this.password) == 0);
     }
+
     public void setPassword(String password)
     {
         this.password = password;
@@ -55,6 +66,7 @@ public class User implements Serializable
         this.username = username;
     }
 
+    public boolean isAdmin(){return this.isAdmin;}
 
     public static boolean doesUsernameExist(String username)
     {
@@ -66,8 +78,9 @@ public class User implements Serializable
 
             ArrayList<User> uL = (ArrayList<User>) o.readObject();
 
-            for (User anUL : uL) {
-                if (anUL.getUsername().equalsIgnoreCase(username))
+            for (User x : uL)
+            {
+                if (x.getUsername().equalsIgnoreCase(username))
                     return true;
             }
             return false;
@@ -77,6 +90,32 @@ public class User implements Serializable
             return false;
         }
 
+    }
+
+    public static boolean checkUserAndPass(String username, String password)
+    {
+        try
+        {
+            FileInputStream f = new FileInputStream("Users.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            ArrayList<User> uL = (ArrayList<User>) o.readObject();
+
+            for (User x : uL)
+            {
+                if (x.getUsername().equalsIgnoreCase(username) && x.getPassword().equals(password))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            return false;
+        }
     }
 
     public static boolean commitUser(User u)
@@ -92,7 +131,6 @@ public class User implements Serializable
             uL = (ArrayList<User>) o.readObject();
 
 
-
         }
         catch (ClassNotFoundException | IOException e)
         {
@@ -104,18 +142,19 @@ public class User implements Serializable
         try
         {
             FileOutputStream fo = new FileOutputStream("Users.ser");
-            ObjectOutputStream oo=new ObjectOutputStream(fo);
+            ObjectOutputStream oo = new ObjectOutputStream(fo);
 
             oo.writeObject(uL);
             return true;
 
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             return false;
         }
 
     }
+
     private String getPassword()
     {
         return this.password;
