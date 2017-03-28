@@ -5,15 +5,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminController">
    <children>
       <Button layoutX="361.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" text="New User" />
       <Button layoutX="90.0" layoutY="8.0" mnemonicParsing="false" text="Delete User" />
-      <TableView layoutY="43.0" prefHeight="558.0" prefWidth="422.0">
+      <TableView layoutY="43.0" prefHeight="558.0" prefWidth="422.0" fx:id="userTable">
         <columns>
-          <TableColumn prefWidth="211.0" text="Username" />
-          <TableColumn prefWidth="210.0" text="Password" />
+          <TableColumn prefWidth="211.0" text="Username" fx:id="usernameCol" />
+          <TableColumn prefWidth="210.0" text="Password" fx:id="passwordCol" />
         </columns>
       </TableView>
    </children>

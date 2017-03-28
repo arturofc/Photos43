@@ -101,6 +101,12 @@ public class User implements Serializable
 
     }
 
+    /**
+     * Check, if given some username and password if that combo exists and if it is correct
+     * @param username username input
+     * @param password password input
+     * @return true if match, false if not
+     */
     public static boolean checkUserAndPass(String username, String password)
     {
         try
@@ -123,9 +129,16 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
+            System.out.println("Error checking username and password");
             return false;
         }
     }
+
+    /**
+     * Commit a user to file. If user exists, it will be overwritten
+     * @param u user to commit
+     * @return true if commited. False if not
+     */
 
     public static boolean commitUser(User u)
     {
@@ -150,14 +163,21 @@ public class User implements Serializable
             System.out.println("Error pulling old Users");
         }
 
-
+        /*
+        If username already exists
+         */
         if (uL.contains(u))
         {
-            System.out.println("Username already exists");
-            return false;
+            uL.remove(u);
+            uL.add(u);
+            System.out.println("Username already exists, overwriting old user");
+        }
+        else
+        {
+            uL.add(u);
         }
 
-        uL.add(u);
+
 
         try
         {
@@ -175,36 +195,66 @@ public class User implements Serializable
 
     }
 
+    /**
+     * Get the name of the user
+     * @return the name of the user
+     */
+
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * Set the name of the user
+     * @param name the name
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     * Check if passwoord matches the inputted password
+     * @param password to check
+     * @return true if match, false if not
+     */
     public boolean checkPassword(String password)
     {
         return (password.compareTo(this.password) == 0);
     }
 
+    /**
+     * Get the username
+     * @return the username
+     */
     public String getUsername()
     {
         return this.username;
     }
 
+    /**
+     * Sets the username
+     * @param username username
+     */
     public void setUsername(String username)
     {
         this.username = username;
     }
 
-    private String getPassword()
+    /**
+     * Gets the password
+     * @return returns the password
+     */
+    public String getPassword()
     {
         return this.password;
     }
 
+    /**
+     * Set password of this instance.
+     * @param password password
+     */
     public void setPassword(String password)
     {
         this.password = password;
@@ -233,5 +283,30 @@ public class User implements Serializable
     public int hashCode()
     {
         return Objects.hash(this.username);
+    }
+
+    public static ArrayList<User> getUserList()
+    {
+        ArrayList<User> users = new ArrayList<>();
+
+        try
+        {
+            FileInputStream f = new FileInputStream("Users.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            HashSet<User> uL = (HashSet<User>) o.readObject();
+
+            users.addAll(uL);
+
+            return users;
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error getting user list returning empty list");
+            return users;
+        }
+
     }
 }

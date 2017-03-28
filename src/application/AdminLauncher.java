@@ -19,6 +19,8 @@ public class AdminLauncher
         loader.setLocation(AdminLauncher.class.getResource("/view/Admin.fxml"));
         AnchorPane root = loader.load();
 
+        AdminController aCont = loader.getController();
+        aCont.init();
 
         Stage primaryStage = new Stage();
 
