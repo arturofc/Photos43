@@ -1,20 +1,16 @@
 package application;
 
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -42,7 +38,6 @@ public class AdminController
     public TableColumn<User, String> usernameCol;
     @FXML
     private TableView<User> userTable = new TableView<>();
-
 
 
     public void init()
@@ -88,8 +83,7 @@ public class AdminController
             data.remove(remove);
             alert.close();
 
-        }
-        else
+        } else
         {
             alert.close();
         }
@@ -110,11 +104,13 @@ public class AdminController
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
     public void closeAddUser(ActionEvent event) throws IOException
     {
         ((Node) (event.getSource())).getScene().getWindow().hide();
         AdminLauncher.start();
     }
+
     public void addUserButton(ActionEvent event) throws IOException
     {
         if (username.getText().isEmpty())
@@ -126,8 +122,7 @@ public class AdminController
             invalidInput.showAndWait();
             return;
 
-        }
-        else if (User.doesUsernameExist(username.getText()))
+        } else if (User.doesUsernameExist(username.getText()))
         {
             Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
             invalidInput.setTitle("Error");
@@ -135,15 +130,13 @@ public class AdminController
             invalidInput.setContentText("Cannot add a username that exists");
             invalidInput.showAndWait();
             return;
-        }
-        else if (name.getText().isEmpty())
+        } else if (name.getText().isEmpty())
         {
             if (isAdminBox.isSelected())
                 User.commitUser(new User(username.getText(), username.getText(), password.getText(), true));
             else
                 User.commitUser(new User(username.getText(), username.getText(), password.getText()));
-        }
-        else
+        } else
         {
             if (isAdminBox.isSelected())
                 User.commitUser(new User(name.getText(), username.getText(), password.getText(), true));
