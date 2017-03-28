@@ -2,13 +2,21 @@ package application;
 
 
 import Controllers.LoginController;
+import com.sun.javafx.robot.impl.FXRobotHelper;
+import com.sun.javafx.stage.StageHelper;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Calin Gilan
@@ -32,9 +40,25 @@ public class Photos extends Application
 
 
     }
+
+    public static void logout(ActionEvent event) throws Exception
+    {
+        
+        while (StageHelper.getStages().size() != 0)
+        {
+            StageHelper.getStages().get(0).hide();
+        }
+
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        LoginLauncher.start();
+    }
     public static void main(String[] args)
     {
         launch(args);
     }
+
+
+
 
 }

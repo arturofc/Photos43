@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AdminController">
    <children>
-      <Button layoutX="361.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
+      <Button onAction="#logout" layoutX="361.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button onAction="#addUser" layoutX="6.0" layoutY="8.0" mnemonicParsing="false" text="New User" />
       <Button onAction="#deleteUser" layoutX="90.0" layoutY="8.0" mnemonicParsing="false" text="Delete User" />
       <TableView layoutY="43.0" prefHeight="558.0" prefWidth="422.0" fx:id="userTable">

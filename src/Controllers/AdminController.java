@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.User;
 import application.AdminLauncher;
+import application.Photos;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -85,7 +86,8 @@ public class AdminController
             data.remove(remove);
             alert.close();
 
-        } else
+        }
+        else
         {
             alert.close();
         }
@@ -124,7 +126,8 @@ public class AdminController
             invalidInput.showAndWait();
             return;
 
-        } else if (User.doesUsernameExist(username.getText()))
+        }
+        else if (User.doesUsernameExist(username.getText()))
         {
             Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
             invalidInput.setTitle("Error");
@@ -132,13 +135,15 @@ public class AdminController
             invalidInput.setContentText("Cannot add a username that exists");
             invalidInput.showAndWait();
             return;
-        } else if (name.getText().isEmpty())
+        }
+        else if (name.getText().isEmpty())
         {
             if (isAdminBox.isSelected())
                 User.commitUser(new User(username.getText(), username.getText(), password.getText(), true));
             else
                 User.commitUser(new User(username.getText(), username.getText(), password.getText()));
-        } else
+        }
+        else
         {
             if (isAdminBox.isSelected())
                 User.commitUser(new User(name.getText(), username.getText(), password.getText(), true));
@@ -149,6 +154,15 @@ public class AdminController
         ((Node) (event.getSource())).getScene().getWindow().hide();
 
         AdminLauncher.start();
+
+    }
+
+    /*
+    Error Prone. Check this shit later
+     */
+    public void logout(ActionEvent event) throws Exception
+    {
+        Photos.logout(event);
 
     }
 

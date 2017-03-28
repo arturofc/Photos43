@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class LoginLauncher
 {
-    public void start() throws IOException
+    public static void start() throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(LoginLauncher.class.getResource("/view/Login.fxml"));

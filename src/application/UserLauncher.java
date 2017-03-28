@@ -1,5 +1,6 @@
 package application;
 
+import Controllers.UserController;
 import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,8 @@ public class UserLauncher
         loader.setLocation(UserLauncher.class.getResource("/view/User.fxml"));
         AnchorPane root = loader.load();
 
+        UserController uCont = loader.getController();
+        uCont.init(u);
         Stage primaryStage = new Stage();
 
         primaryStage.setTitle("Album List");

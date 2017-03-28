@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.TextField?>
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UserController">
    <children>
-      <Button layoutX="531.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
+      <Button onAction="#logout" layoutX="531.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button layoutX="6.0" layoutY="44.0" mnemonicParsing="false" text="New Album" />
       <Button layoutX="101.0" layoutY="44.0" mnemonicParsing="false" text="Edit Album" />
       <TableView layoutY="78.0" prefHeight="484.0" prefWidth="600.0">
@@ -22,7 +22,7 @@
         </columns>
       </TableView>
       <Button layoutX="195.0" layoutY="44.0" mnemonicParsing="false" text="Delete Album" />
-      <Label layoutX="6.0" text="User Name">
+      <Label fx:id="usernameLabel" layoutX="6.0" text="User Name">
          <font>
             <Font size="36.0" />
          </font>
