@@ -1,4 +1,7 @@
-package application;
+package Models;
+
+import Models.Photo;
+import Models.User;
 
 import java.util.Set;
 import java.util.TreeSet;

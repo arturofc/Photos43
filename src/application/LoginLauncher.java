@@ -1,6 +1,6 @@
 package application;
 
-import javafx.application.Application;
+import Controllers.LoginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;

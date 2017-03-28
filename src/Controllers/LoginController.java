@@ -1,5 +1,8 @@
-package application;
+package Controllers;
 
+import Models.User;
+import application.AdminLauncher;
+import application.UserLauncher;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -34,20 +37,20 @@ public class LoginController
 
     public void submit(Event event)
     {
-        if (login(usernameInput.getText(), passwordInput.getText()))
-            launchView(User.isAdmin(usernameInput.getText()), event);
+        if (login(usernameInput.getText(), passwordInput.getText()) && User.getUser(usernameInput.getText()).isPresent())
+            launchView(User.getUser(usernameInput.getText()).get(), User.isAdmin(usernameInput.getText()), event);
         else
             showPasswordError();
     }
 
-    private void launchView(boolean isAdmin, Event event)
+    private void launchView(User u, boolean isAdmin, Event event)
     {
         if (isAdmin)
         {
             try
             {
                 ((Node) (event.getSource())).getScene().getWindow().hide();
-                UserLauncher.start();
+                UserLauncher.start(u);
                 AdminLauncher.start();
 
             }
@@ -62,7 +65,7 @@ public class LoginController
             try
             {
                 ((Node) (event.getSource())).getScene().getWindow().hide();
-                UserLauncher.start();
+                UserLauncher.start(u);
             }
             catch (IOException e)
             {

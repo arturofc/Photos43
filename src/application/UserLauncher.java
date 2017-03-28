@@ -1,5 +1,6 @@
 package application;
 
+import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -13,7 +14,7 @@ import java.io.IOException;
  */
 public class UserLauncher
 {
-    public static void start() throws IOException
+    public static void start(User u) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UserLauncher.class.getResource("/view/User.fxml"));

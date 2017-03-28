@@ -1,9 +1,10 @@
-package application;
+package Models;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Calin Gilan
@@ -226,7 +227,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error pulling old Users" + e.toString());
+            System.out.println("Error pulling old Users " + e.toString());
         }
 
         /*
@@ -359,6 +360,41 @@ public class User implements Serializable
         {
             System.out.println("Error storing updated user list while trying to remove " + e.toString());
             return false;
+        }
+    }
+
+    public static Optional<User> getUser(String username)
+    {
+        if (doesUsernameExist(username))
+        {
+            try
+            {
+                FileInputStream f = new FileInputStream("Users.ser");
+                ObjectInputStream o = new ObjectInputStream(f);
+
+
+                HashSet<User> uL = (HashSet<User>) o.readObject();
+
+                for (User x : uL)
+                {
+                    if (x.getUsername().equals(username))
+                    {
+                        return Optional.of(x);
+                    }
+                }
+
+                return Optional.empty();
+            }
+            catch (ClassNotFoundException | IOException e)
+            {
+                System.out.println("Error getting and returning user: " + e.toString());
+                return Optional.empty();
+            }
+        }
+        else
+        {
+            System.out.println("Username does not exist");
+            return Optional.empty();
         }
     }
 }

@@ -1,5 +1,7 @@
-package application;
+package Controllers;
 
+import Models.User;
+import application.AdminLauncher;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
