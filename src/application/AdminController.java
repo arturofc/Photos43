@@ -1,15 +1,22 @@
 package application;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -18,6 +25,16 @@ import java.util.Optional;
  */
 public class AdminController
 {
+    @FXML
+    public TextField name;
+    @FXML
+    public TextField username;
+    @FXML
+    public TextField password;
+
+    @FXML
+    public CheckBox isAdminBox;
+
     private ObservableList<User> data;
     @FXML
     public TableColumn<User, String> passwordCol;
@@ -25,6 +42,8 @@ public class AdminController
     public TableColumn<User, String> usernameCol;
     @FXML
     private TableView<User> userTable = new TableView<>();
+
+
 
     public void init()
     {
@@ -34,8 +53,6 @@ public class AdminController
         passwordCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPassword()));
 
         userTable.setItems(data);
-
-        System.out.println(User.getUserList().size());
 
     }
 
@@ -76,6 +93,68 @@ public class AdminController
         {
             alert.close();
         }
+    }
+
+    public void addUser(ActionEvent event) throws IOException
+    {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AdminLauncher.class.getResource("/view/AddUser.fxml"));
+        AnchorPane root = loader.load();
+
+        Stage primaryStage = new Stage();
+
+        primaryStage.setTitle("Add New User");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+    public void closeAddUser(ActionEvent event) throws IOException
+    {
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+        AdminLauncher.start();
+    }
+    public void addUserButton(ActionEvent event) throws IOException
+    {
+        if (username.getText().isEmpty())
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("Error");
+            invalidInput.setHeaderText("Username Required");
+            invalidInput.setContentText("A username is required");
+            invalidInput.showAndWait();
+            return;
+
+        }
+        else if (User.doesUsernameExist(username.getText()))
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("Error");
+            invalidInput.setHeaderText("Username exists");
+            invalidInput.setContentText("Cannot add a username that exists");
+            invalidInput.showAndWait();
+            return;
+        }
+        else if (name.getText().isEmpty())
+        {
+            if (isAdminBox.isSelected())
+                User.commitUser(new User(username.getText(), username.getText(), password.getText(), true));
+            else
+                User.commitUser(new User(username.getText(), username.getText(), password.getText()));
+        }
+        else
+        {
+            if (isAdminBox.isSelected())
+                User.commitUser(new User(name.getText(), username.getText(), password.getText(), true));
+            else
+                User.commitUser(new User(name.getText(), username.getText(), password.getText()));
+        }
+
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        AdminLauncher.start();
+
     }
 
 }
