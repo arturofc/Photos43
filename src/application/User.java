@@ -28,6 +28,7 @@ public class User implements Serializable
         this.password = password;
         this.isAdmin = false;
     }
+
     public User(String name, String username, String password, boolean isAdmin)
     {
 
@@ -37,40 +38,9 @@ public class User implements Serializable
         this.isAdmin = isAdmin;
     }
 
-
-    public String getName()
-    {
-        return this.name;
-    }
-
-    public boolean checkPassword(String password)
-    {
-        return (password.compareTo(this.password) == 0);
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getUsername()
-    {
-        return this.username;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-
     /**
      * Checks if given username is an administrator
+     *
      * @param username username to check if is admin.
      * @return true if admin, false if not
      */
@@ -105,9 +75,9 @@ public class User implements Serializable
         }
     }
 
-
     /**
      * Checks if given username exists.
+     *
      * @param username username to check if exists.
      * @return true if exists, false if not
      */
@@ -121,7 +91,7 @@ public class User implements Serializable
 
             HashSet<User> uL = (HashSet<User>) o.readObject();
 
-            return uL.contains(new User("",username,""));
+            return uL.contains(new User("", username, ""));
 
         }
         catch (ClassNotFoundException | IOException e)
@@ -205,13 +175,44 @@ public class User implements Serializable
 
     }
 
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public boolean checkPassword(String password)
+    {
+        return (password.compareTo(this.password) == 0);
+    }
+
+    public String getUsername()
+    {
+        return this.username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
     private String getPassword()
     {
         return this.password;
     }
 
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
     /**
      * Compare equality, objects are equal if they have the same username.
+     *
      * @param o object to compare equality
      * @return true if equal, false if not.
      */
@@ -221,7 +222,7 @@ public class User implements Serializable
         if (o == this)
             return true;
 
-        if (! (o instanceof User))
+        if (!(o instanceof User))
             return false;
 
         User u = (User) o;
