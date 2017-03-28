@@ -19,7 +19,6 @@ public class UserLauncher
         loader.setLocation(UserLauncher.class.getResource("/view/User.fxml"));
         AnchorPane root = loader.load();
 
-
         Stage primaryStage = new Stage();
 
         primaryStage.setTitle("Album List");
@@ -29,7 +28,6 @@ public class UserLauncher
 
 
     }
-
 
 
 }

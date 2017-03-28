@@ -9,7 +9,7 @@
    <children>
       <Button layoutX="361.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" text="New User" />
-      <Button layoutX="90.0" layoutY="8.0" mnemonicParsing="false" text="Delete User" />
+      <Button onAction="#deleteUser" layoutX="90.0" layoutY="8.0" mnemonicParsing="false" text="Delete User" />
       <TableView layoutY="43.0" prefHeight="558.0" prefWidth="422.0" fx:id="userTable">
         <columns>
           <TableColumn prefWidth="211.0" text="Username" fx:id="usernameCol" />

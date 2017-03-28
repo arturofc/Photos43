@@ -226,7 +226,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error pulling old Users");
+            System.out.println("Error pulling old Users" + e.toString());
         }
 
         /*
@@ -288,7 +288,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error checking username and password");
+            System.out.println("Error checking username and password " + e.toString());
             return false;
         }
     }
@@ -317,5 +317,48 @@ public class User implements Serializable
             return false;
         }
 
+    }
+
+    public static boolean deleteUser(User u)
+    {
+        HashSet<User> uL = new HashSet<>();
+
+        /*
+        If you cannot retrieve the file you cannot remove the user
+         */
+        try
+        {
+            FileInputStream f = new FileInputStream("Users.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+            uL = (HashSet<User>) o.readObject();
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error removing user " + e.toString());
+            return false;
+        }
+
+        if (uL.contains(u))
+        {
+            uL.remove(u);
+
+        }
+
+        try
+        {
+            FileOutputStream fo = new FileOutputStream("Users.ser");
+            ObjectOutputStream oo = new ObjectOutputStream(fo);
+
+            oo.writeObject(uL);
+            return true;
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error storing updated user list while trying to remove " + e.toString());
+            return false;
+        }
     }
 }
