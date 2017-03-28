@@ -18,6 +18,12 @@ public class User implements Serializable
     private String password;
     private boolean isAdmin;
 
+    /**
+     * User constructor
+     * @param name display name
+     * @param username username
+     * @param password password
+     */
     public User(String name, String username, String password)
     {
 
@@ -27,6 +33,13 @@ public class User implements Serializable
         this.isAdmin = false;
     }
 
+    /**
+     * User constructor
+     * @param name display name
+     * @param username username
+     * @param password password
+     * @param isAdmin if user is admin or not
+     */
     public User(String name, String username, String password, boolean isAdmin)
     {
 
@@ -128,6 +141,11 @@ public class User implements Serializable
         return this.username.equals(u.getUsername());
     }
 
+    /**
+     * Override hashcode for users. Users have same hashcode if they have the same username
+     * @return hashcode for user
+     */
+
     public int hashCode()
     {
         return Objects.hash(this.username);
@@ -138,6 +156,10 @@ public class User implements Serializable
     Static Methods
     */
 
+    /**
+     * Get stored user list
+     * @return list of all users
+     */
     public static ArrayList<User> getUserList()
     {
         ArrayList<User> users = new ArrayList<>();
@@ -320,6 +342,11 @@ public class User implements Serializable
 
     }
 
+    /**
+     * Given a user, delete it
+     * @param u user to delete
+     * @return true if deleted, false if some kind of error
+     */
     public static boolean deleteUser(User u)
     {
         HashSet<User> uL = new HashSet<>();
@@ -363,6 +390,11 @@ public class User implements Serializable
         }
     }
 
+    /**
+     * Given a username, return a user
+     * @param username username to get
+     * @return Optional which contains a user if the user exists
+     */
     public static Optional<User> getUser(String username)
     {
         if (doesUsernameExist(username))

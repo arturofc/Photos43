@@ -7,7 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
- * Created by cal13 on 3/28/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class UserController
 {

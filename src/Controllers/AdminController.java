@@ -7,6 +7,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -43,6 +46,9 @@ public class AdminController
     private TableView<User> userTable = new TableView<>();
 
 
+    /**
+     * Init the admin panel
+     */
     public void init()
     {
         data = FXCollections.observableArrayList(User.getUserList());
@@ -54,6 +60,11 @@ public class AdminController
 
     }
 
+    /**
+     * Handles the delete user button
+     *
+     * @param actionEvent the button event
+     */
     public void deleteUser(ActionEvent actionEvent)
     {
         if (data.isEmpty())
@@ -93,6 +104,11 @@ public class AdminController
         }
     }
 
+    /**
+     * Handles the add user button
+     * @param event the button event
+     * @throws IOException throws an IOException
+     */
     public void addUser(ActionEvent event) throws IOException
     {
         ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -107,14 +123,41 @@ public class AdminController
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we)
+            {
+                try
+                {
+                    AdminLauncher.start();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
     }
 
+    /**
+     * Closes the add user screen
+     * @param event the button event
+     * @throws IOException throws an IOException
+     */
     public void closeAddUser(ActionEvent event) throws IOException
     {
         ((Node) (event.getSource())).getScene().getWindow().hide();
         AdminLauncher.start();
     }
 
+    /**
+     * Handles adding a user
+     * @param event the add button event
+     * @throws IOException throws an IOException
+     */
     public void addUserButton(ActionEvent event) throws IOException
     {
         if (username.getText().isEmpty())
@@ -159,6 +202,12 @@ public class AdminController
 
     /*
     Error Prone. Check this shit later
+     */
+
+    /**
+     * Handles logging out
+     * @param event the logout button event
+     * @throws Exception throws an Exception
      */
     public void logout(ActionEvent event) throws Exception
     {

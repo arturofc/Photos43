@@ -1,10 +1,8 @@
 package Models;
 
-import Models.Photo;
-import Models.User;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Calin Gilan
@@ -16,16 +14,156 @@ public class Album
     private Set<Photo> photos;
     private User owner;
 
-    public Album(String name)
+    public Album(String name, User owner)
     {
         this.name = name;
         this.photos = new TreeSet<>();
+        this.owner = owner;
     }
 
-    public Album(String name, Set<Photo> photos)
+    public Album(String name, Set<Photo> photos, User owner)
     {
         this.name = name;
         this.photos = photos;
+        this.owner = owner;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public Set<Photo> getPhotos()
+    {
+        return photos;
+    }
+
+    public User getOwner()
+    {
+        return owner;
+    }
+
+    public void setOwner(User owner)
+    {
+        this.owner = owner;
+    }
+
+
+    public void setPhotos(Set<Photo> photos)
+    {
+        this.photos = photos;
+    }
+
+    /**
+     * Compare equality, objects are equal if they have the same album name and same owner.
+     *
+     * @param o object to compare equality
+     * @return true if equal, false if not.
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this)
+            return true;
+
+        if (!(o instanceof Album))
+            return false;
+
+        Album a = (Album) o;
+
+        return (this.name.equals(a.getName()) && this.owner.equals(a.getOwner()));
+    }
+
+    public int hashCode()
+    {
+        return Objects.hash(this.name, this.owner);
+    }
+
+    /*
+    Static methods
+    ---------------------------------------
+     */
+
+    public static ArrayList<Album> getAlbums(User u)
+    {
+        ArrayList<Album> albums = new ArrayList<>();
+
+        try
+        {
+            FileInputStream f = new FileInputStream("Albums.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            HashSet<Album> aL = (HashSet<Album>) o.readObject();
+
+            albums.addAll(aL);
+
+            return albums;
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error getting album list for User u, returning empty list");
+            return albums;
+        }
+    }
+
+    public static boolean commitAlbum(Album a)
+    {
+        HashSet<Album> aL = new HashSet<>();
+
+        /*
+        Try to pull old user file to update
+        If can't assume this is the first time
+         */
+        try
+        {
+            FileInputStream f = new FileInputStream("Albums.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            aL = (HashSet<Album>) o.readObject();
+
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error pulling old Albums " + e.toString());
+        }
+
+        /*
+        If username already exists
+         */
+        if (aL.contains(a))
+        {
+            aL.remove(a);
+            aL.add(a);
+            System.out.println("Album already exists, overwriting old album");
+        }
+        else
+        {
+            aL.add(a);
+        }
+
+
+        try
+        {
+            FileOutputStream fo = new FileOutputStream("Albums.ser");
+            ObjectOutputStream oo = new ObjectOutputStream(fo);
+
+            oo.writeObject(aL);
+            return true;
+
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
     }
 
 

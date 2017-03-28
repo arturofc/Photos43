@@ -15,6 +15,11 @@ import java.io.IOException;
  */
 public class UserLauncher
 {
+    /**
+     * Launches the album panel
+     * @param u user that is passed in when logged in.
+     * @throws IOException throws an IOException
+     */
     public static void start(User u) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
