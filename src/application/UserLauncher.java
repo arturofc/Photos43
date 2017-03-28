@@ -5,25 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.loginController;
 
 import java.io.IOException;
 
 /**
  * Created by cal13 on 3/27/2017.
  */
-public class Login extends Application
+public class UserLauncher
 {
-    public void start(Stage primaryStage) throws IOException
+    public static void start() throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/Login.fxml"));
+        loader.setLocation(UserLauncher.class.getResource("/view/User.fxml"));
         AnchorPane root = loader.load();
 
-        loginController lCont = loader.getController();
-        lCont.launch();
 
-        primaryStage.setTitle("Login");
+        Stage primaryStage = new Stage();
+
+        primaryStage.setTitle("Album List");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -31,8 +30,6 @@ public class Login extends Application
 
     }
 
-    public static void launchLogin()
-    {
-        launch();
-    }
+
+
 }
