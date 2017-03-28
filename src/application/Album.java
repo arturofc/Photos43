@@ -4,7 +4,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created by cal13 on 3/22/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class Album
 {
@@ -17,12 +18,12 @@ public class Album
         this.name = name;
         this.photos = new TreeSet<>();
     }
+
     public Album(String name, Set<Photo> photos)
     {
         this.name = name;
         this.photos = photos;
     }
-
 
 
 }

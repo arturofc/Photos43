@@ -6,10 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * Created by cal13 on 3/27/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class AdminController
 {

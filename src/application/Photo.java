@@ -5,12 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 
 /**
- * Created by cal13 on 3/22/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class Photo implements Serializable
 {

@@ -1,6 +1,5 @@
 package application;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -9,7 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Created by cal13 on 3/27/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class AdminLauncher
 {

@@ -9,7 +9,8 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 /**
- * Created by cal13 on 3/24/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class LoginController
 {
@@ -20,66 +21,59 @@ public class LoginController
 
     public void init()
     {
-        User u = new User("admin","admin","admin", true);
+        User u = new User("admin", "admin", "admin", true);
         User.commitUser(u);
         System.out.println("LoginLauncher Controller started");
 
     }
 
-    public boolean login(String username, String password)
+    private boolean login(String username, String password)
     {
-       return User.checkUserAndPass(username, password);
+        return User.checkUserAndPass(username, password);
     }
+
     public void submit(Event event)
     {
-        if (login(usernameInput.getText(), passwordInput.getText()) )
+        if (login(usernameInput.getText(), passwordInput.getText()))
             launchView(User.isAdmin(usernameInput.getText()), event);
         else
-            showError();
+            showPasswordError();
     }
-    public void launchView(boolean isAdmin, Event event)
+
+    private void launchView(boolean isAdmin, Event event)
     {
-            if (isAdmin)
+        if (isAdmin)
+        {
+            try
             {
-                try
-                {
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                    UserLauncher.start();
-                    AdminLauncher.start();
-
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-
-                    Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-                    invalidInput.setTitle("ERROR");
-                    invalidInput.setHeaderText("IO Error");
-                    invalidInput.setContentText("IO Error launching windows");
-                    invalidInput.showAndWait();
-                }
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+                UserLauncher.start();
+                AdminLauncher.start();
 
             }
-            else
+            catch (IOException e)
             {
-                try
-                {
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                    UserLauncher.start();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-
-                    Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-                    invalidInput.setTitle("ERROR");
-                    invalidInput.setHeaderText("IO Error");
-                    invalidInput.setContentText("IO Error launching windows");
-                    invalidInput.showAndWait();
-                }
+                e.printStackTrace();
+                showIOError();
             }
+
+        } else
+        {
+            try
+            {
+                ((Node) (event.getSource())).getScene().getWindow().hide();
+                UserLauncher.start();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+
+                showIOError();
+            }
+        }
     }
-    public void showError()
+
+    private void showPasswordError()
     {
         Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
         invalidInput.setTitle("Invalid Input");
@@ -87,6 +81,15 @@ public class LoginController
         invalidInput.setContentText("Username or Password Does Not Exist");
         invalidInput.showAndWait();
 
+    }
+
+    private void showIOError()
+    {
+        Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+        invalidInput.setTitle("ERROR");
+        invalidInput.setHeaderText("IO Error");
+        invalidInput.setContentText("IO Error launching windows");
+        invalidInput.showAndWait();
     }
 
 

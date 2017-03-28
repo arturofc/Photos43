@@ -9,8 +9,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static javafx.application.Application.launch;
-
+/**
+ * @author Calin Gilan
+ * @author Arturo Corro
+ */
 public class Photos extends Application
 {
     public void start(Stage primaryStage) throws IOException

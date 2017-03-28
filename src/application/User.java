@@ -1,16 +1,13 @@
 package application;
 
-import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
-
-import javax.imageio.IIOException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by cal13 on 3/24/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class User implements Serializable
 {
@@ -36,6 +33,133 @@ public class User implements Serializable
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+    }
+
+    /**
+     * Get the name of the user
+     *
+     * @return the name of the user
+     */
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    /**
+     * Set the name of the user
+     *
+     * @param name the name
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    /**
+     * Check if passwoord matches the inputted password
+     *
+     * @param password to check
+     * @return true if match, false if not
+     */
+    public boolean checkPassword(String password)
+    {
+        return (password.compareTo(this.password) == 0);
+    }
+
+    /**
+     * Get the username
+     *
+     * @return the username
+     */
+    public String getUsername()
+    {
+        return this.username;
+    }
+
+    /**
+     * Sets the username
+     *
+     * @param username username
+     */
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    /**
+     * Gets the password
+     *
+     * @return returns the password
+     */
+    public String getPassword()
+    {
+        return this.password;
+    }
+
+    /**
+     * Set password of this instance.
+     *
+     * @param password password
+     */
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    /**
+     * Compare equality, objects are equal if they have the same username.
+     *
+     * @param o object to compare equality
+     * @return true if equal, false if not.
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this)
+            return true;
+
+        if (!(o instanceof User))
+            return false;
+
+        User u = (User) o;
+
+        return this.username.equals(u.getUsername());
+    }
+
+    public int hashCode()
+    {
+        return Objects.hash(this.username);
+    }
+
+    /*
+    -------------------------------------
+    Static Methods
+    */
+
+    public static ArrayList<User> getUserList()
+    {
+        ArrayList<User> users = new ArrayList<>();
+
+        try
+        {
+            FileInputStream f = new FileInputStream("Users.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            HashSet<User> uL = (HashSet<User>) o.readObject();
+
+            users.addAll(uL);
+
+            return users;
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error getting user list returning empty list");
+            return users;
+        }
+
     }
 
     /**
@@ -76,66 +200,8 @@ public class User implements Serializable
     }
 
     /**
-     * Checks if given username exists.
-     *
-     * @param username username to check if exists.
-     * @return true if exists, false if not
-     */
-    public static boolean doesUsernameExist(String username)
-    {
-        try
-        {
-            FileInputStream f = new FileInputStream("Users.ser");
-            ObjectInputStream o = new ObjectInputStream(f);
-
-
-            HashSet<User> uL = (HashSet<User>) o.readObject();
-
-            return uL.contains(new User("", username, ""));
-
-        }
-        catch (ClassNotFoundException | IOException e)
-        {
-            return false;
-        }
-
-    }
-
-    /**
-     * Check, if given some username and password if that combo exists and if it is correct
-     * @param username username input
-     * @param password password input
-     * @return true if match, false if not
-     */
-    public static boolean checkUserAndPass(String username, String password)
-    {
-        try
-        {
-            FileInputStream f = new FileInputStream("Users.ser");
-            ObjectInputStream o = new ObjectInputStream(f);
-
-
-            HashSet<User> uL = (HashSet<User>) o.readObject();
-
-            for (User x : uL)
-            {
-                if (x.getUsername().equals(username) && x.getPassword().equals(password))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        catch (ClassNotFoundException | IOException e)
-        {
-            System.out.println("Error checking username and password");
-            return false;
-        }
-    }
-
-    /**
      * Commit a user to file. If user exists, it will be overwritten
+     *
      * @param u user to commit
      * @return true if commited. False if not
      */
@@ -171,12 +237,10 @@ public class User implements Serializable
             uL.remove(u);
             uL.add(u);
             System.out.println("Username already exists, overwriting old user");
-        }
-        else
+        } else
         {
             uL.add(u);
         }
-
 
 
         try
@@ -196,99 +260,14 @@ public class User implements Serializable
     }
 
     /**
-     * Get the name of the user
-     * @return the name of the user
-     */
-
-    public String getName()
-    {
-        return this.name;
-    }
-
-    /**
-     * Set the name of the user
-     * @param name the name
-     */
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    /**
-     * Check if passwoord matches the inputted password
-     * @param password to check
+     * Check, if given some username and password if that combo exists and if it is correct
+     *
+     * @param username username input
+     * @param password password input
      * @return true if match, false if not
      */
-    public boolean checkPassword(String password)
+    public static boolean checkUserAndPass(String username, String password)
     {
-        return (password.compareTo(this.password) == 0);
-    }
-
-    /**
-     * Get the username
-     * @return the username
-     */
-    public String getUsername()
-    {
-        return this.username;
-    }
-
-    /**
-     * Sets the username
-     * @param username username
-     */
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    /**
-     * Gets the password
-     * @return returns the password
-     */
-    public String getPassword()
-    {
-        return this.password;
-    }
-
-    /**
-     * Set password of this instance.
-     * @param password password
-     */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    /**
-     * Compare equality, objects are equal if they have the same username.
-     *
-     * @param o object to compare equality
-     * @return true if equal, false if not.
-     */
-    @Override
-    public boolean equals(Object o)
-    {
-        if (o == this)
-            return true;
-
-        if (!(o instanceof User))
-            return false;
-
-        User u = (User) o;
-
-        return this.username.equals(u.getUsername());
-    }
-
-    public int hashCode()
-    {
-        return Objects.hash(this.username);
-    }
-
-    public static ArrayList<User> getUserList()
-    {
-        ArrayList<User> users = new ArrayList<>();
-
         try
         {
             FileInputStream f = new FileInputStream("Users.ser");
@@ -297,15 +276,45 @@ public class User implements Serializable
 
             HashSet<User> uL = (HashSet<User>) o.readObject();
 
-            users.addAll(uL);
+            for (User x : uL)
+            {
+                if (x.getUsername().equals(username) && x.getPassword().equals(password))
+                {
+                    return true;
+                }
+            }
 
-            return users;
+            return false;
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error checking username and password");
+            return false;
+        }
+    }
+
+    /**
+     * Checks if given username exists.
+     *
+     * @param username username to check if exists.
+     * @return true if exists, false if not
+     */
+    public static boolean doesUsernameExist(String username)
+    {
+        try
+        {
+            FileInputStream f = new FileInputStream("Users.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            HashSet<User> uL = (HashSet<User>) o.readObject();
+
+            return uL.contains(new User("", username, ""));
 
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error getting user list returning empty list");
-            return users;
+            return false;
         }
 
     }
