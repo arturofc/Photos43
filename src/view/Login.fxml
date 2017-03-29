@@ -7,12 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="189.0" prefWidth="280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="Controllers.LoginController">
+<AnchorPane prefHeight="189.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
    <children>
-      <Label layoutX="61.0" layoutY="10.0" text="Photos">
+      <Label layoutX="77.0" layoutY="10.0" text="Photos">
          <font>
-            <Font size="48.0" />
+            <Font size="43.0" />
          </font>
       </Label>
       <Pane layoutY="70.0" prefHeight="111.0" prefWidth="280.0">
@@ -21,7 +20,7 @@
             <TextField fx:id="passwordInput" layoutX="85.0" layoutY="38.0" prefHeight="27.0" prefWidth="189.0" />
             <Label layoutX="13.0" layoutY="11.0" text="Username" />
             <Label layoutX="13.0" layoutY="43.0" text="Password" />
-          <Button layoutX="114.0" layoutY="77.0" mnemonicParsing="false" text="Login" onAction="#submit" />
+          <Button layoutX="114.0" layoutY="77.0" mnemonicParsing="false" onAction="#submit" text="Login" />
          </children>
       </Pane>
    </children>

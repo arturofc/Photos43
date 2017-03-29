@@ -97,6 +97,15 @@ public class Photo implements Serializable
         this.date = date;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o)
