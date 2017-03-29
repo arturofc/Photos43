@@ -51,7 +51,8 @@ public class AlbumController
         imageTable.setPadding(new Insets(15, 15, 15, 15));
         imageTable.setHgap(15);
 
-        for (Photo p : album.getPhotos()) {
+        for (Photo p : album.getPhotos())
+        {
             ImageView imageView;
             imageView = createImageView(p.getPhotoFile());
             imageTable.getChildren().addAll(imageView);
@@ -59,10 +60,12 @@ public class AlbumController
 
         albumLabel.setText(album.getName());
     }
+
     public void logout(ActionEvent event) throws Exception
     {
         Photos.logout(event);
     }
+
     public void back(ActionEvent event) throws Exception
     {
         ((Node) (event.getSource())).getScene().getWindow().hide();
