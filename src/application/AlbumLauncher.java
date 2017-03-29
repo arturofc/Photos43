@@ -7,12 +7,14 @@ import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 /**
- * Created by cal13 on 3/28/2017.
+ * @author Calin Gilan
+ * @author Arturo Corro
  */
 public class AlbumLauncher
 {
@@ -23,20 +25,19 @@ public class AlbumLauncher
      * @param a the album being launched
      * @throws IOException throws an IOException
      */
-    public static void start(User u, Album a) throws IOException
+    public static void start(User u, Album a, Stage s) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UserLauncher.class.getResource("/view/Album.fxml"));
-        AnchorPane root = loader.load();
+        BorderPane root = loader.load();
 
         AlbumController aCont = loader.getController();
-        aCont.init(u, a);
-        Stage primaryStage = new Stage();
+        aCont.init(u, a, s);
 
-        primaryStage.setTitle("Album");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        s.setTitle("Album");
+        s.setScene(new Scene(root));
+        s.setResizable(false);
+        s.show();
 
 
     }

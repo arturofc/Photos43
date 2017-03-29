@@ -1,6 +1,7 @@
 package application;
 
-import Controllers.AdminController;
+import Controllers.SlideshowController;
+import Models.Album;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,30 +13,30 @@ import java.io.IOException;
  * @author Calin Gilan
  * @author Arturo Corro
  */
-public class AdminLauncher
+public class SlideshowLauncher
 {
     /**
-     * Start Admin Panel
+     * Launches the slideshow screen
      *
-     * @throws IOException throws an IO Exception.
+     * @param a the album to slideshow
+     * @throws IOException throws an exception
      */
-    public static void start() throws IOException
+    public static void start(Album a) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(AdminLauncher.class.getResource("/view/Admin.fxml"));
+        loader.setLocation(UserLauncher.class.getResource("/view/Slideshow.fxml"));
         BorderPane root = loader.load();
 
-        AdminController aCont = loader.getController();
-        aCont.init();
+        SlideshowController sCont = loader.getController();
+        sCont.init(a);
 
         Stage primaryStage = new Stage();
 
-        primaryStage.setTitle("Admin Panel");
+        primaryStage.setTitle("Album");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
 
+
     }
-
-
 }

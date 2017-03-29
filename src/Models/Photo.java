@@ -6,10 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @author Calin Gilan
@@ -18,12 +15,12 @@ import java.util.TreeSet;
 public class Photo implements Serializable
 {
     private String name;
-    private HashMap<String, String> tags;
+    private HashMap<String, HashSet<String>> tags;
     private File photoFile;
-    LocalDate date;
+    private LocalDate date;
 
 
-    public Photo(String name, HashMap<String, String> tags, File file)
+    public Photo(String name, HashMap<String, HashSet<String>> tags, File file)
     {
         this.name = name;
         this.tags = tags;
@@ -38,8 +35,15 @@ public class Photo implements Serializable
         this.photoFile = file;
         this.date = LocalDate.now();
     }
+    public Photo(String name, File file, LocalDate date)
+    {
+        this.name = name;
+        this.tags = new HashMap<>();
+        this.photoFile = file;
+        this.date = date;
+    }
 
-    public Photo(String name, HashMap<String, String> tags, File file, LocalDate date)
+    public Photo(String name, HashMap<String, HashSet<String>> tags, File file, LocalDate date)
     {
         this.name = name;
         this.tags = tags;
@@ -63,18 +67,29 @@ public class Photo implements Serializable
         return toReturn;
     }
 
-    public void addTag(HashMap<String, String> tags)
+    public void addTag(HashMap<String, HashSet<String>> tags)
     {
         this.tags.putAll(tags);
     }
 
     public void addTag(String key, String value)
     {
-        this.tags.put(key, value);
+        if (this.tags.containsKey(key))
+        {
+            HashSet<String> tempSet = this.tags.get(key);
+            tempSet.add(value);
+            this.tags.put(key, tempSet);
+        }
+        else
+        {
+            HashSet<String> tempSet = new HashSet<>();
+            tempSet.add(value);
+            this.tags.put(key, tempSet);
+        }
     }
 
 
-    private HashMap<String, String> getTags()
+    public HashMap<String, HashSet<String>> getTags()
     {
         return this.tags;
     }

@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AlbumController">
-   <children>
-      <HBox alignment="CENTER" layoutY="46.0" prefHeight="25.0" prefWidth="600.0" spacing="35.0">
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AlbumController">
+   <top>
+      <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#pickImage" prefWidth="100.0" text="New Photo" />
-            <Button mnemonicParsing="false" prefWidth="100.0" text="Edit Photo" />
-            <Button mnemonicParsing="false" prefWidth="100.0" text="Delete Photo" />
-            <MenuButton mnemonicParsing="false" prefWidth="100.0" text="Move to">
+            <Label id="imageListAlbumNameLabel" fx:id="albumLabel" cache="true" cacheHint="QUALITY" prefWidth="310.0" text="Album Name">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#pickImage" prefHeight="39.0" prefWidth="50.0" text="New" />
+            <Button mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="75.0" text="Details" />
+            <Button mnemonicParsing="false" onAction="#slideshow" prefHeight="39.0" prefWidth="75.0" text="Slideshow" />
+            <Button mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
+            <MenuButton fx:id="moveToMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Move to">
               <items>
-                <MenuItem mnemonicParsing="false" text="Test1" />
-                <MenuItem mnemonicParsing="false" text="Test2" />
               </items>
             </MenuButton>
+            <MenuButton mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Copy from">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <Button mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
+            <Button mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="50.0" text="Back" />
          </children>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
       </HBox>
-      <Button layoutX="476.0" layoutY="10.0" mnemonicParsing="false" onAction="#logout" prefWidth="75.0" text="Logout" />
-      <Button layoutX="342.0" layoutY="10.0" mnemonicParsing="false" onAction="#back" prefWidth="75.0" text="Back" />
-      <Label fx:id="albumLabel" layoutX="52.0" layoutY="8.0" text="Album Name">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TilePane fx:id="imageTable" layoutX="33.0" layoutY="79.0" prefHeight="521.0" prefWidth="536.0" vgap="15.0" />
-   </children>
-</AnchorPane>
+   </top>
+   <center>
+      <TilePane fx:id="imageTable" prefWidth="900.0" style="-fx-background-color: '#FFFFFF';" vgap="15.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

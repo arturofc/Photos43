@@ -4,7 +4,7 @@ import Controllers.UserController;
 import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,21 +21,22 @@ public class UserLauncher
      * @param u user that is passed in when logged in.
      * @throws IOException throws an IOException
      */
-    public static void start(User u) throws IOException
+    public static void start(User u, Stage s) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UserLauncher.class.getResource("/view/User.fxml"));
-        AnchorPane root = loader.load();
+        BorderPane root = loader.load();
+
+        Stage primaryStage = s;
 
         UserController uCont = loader.getController();
-        uCont.init(u);
-        Stage primaryStage = new Stage();
+        uCont.init(u, primaryStage);
+
 
         primaryStage.setTitle("Album List");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
-
 
     }
 

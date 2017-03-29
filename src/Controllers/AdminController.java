@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -52,6 +53,9 @@ public class AdminController
     {
         data = FXCollections.observableArrayList(User.getUserList());
 
+        /*
+            Set the columns to the correct values
+         */
         usernameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getUsername()));
         passwordCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPassword()));
 
@@ -66,16 +70,21 @@ public class AdminController
      */
     public void deleteUser(ActionEvent actionEvent)
     {
+        /*
+            If there is no users
+         */
         if (data.isEmpty())
         {
             Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            //invalidInput.initOwner(maingStage); FIND OUT IF THIS IS NECESSARY
             invalidInput.setTitle("Can not remove");
             invalidInput.setHeaderText("No users");
             invalidInput.setContentText("Please make sure to have a populated user list");
             invalidInput.showAndWait();
             return;
         }
+        /*
+            If theres nothing selected
+         */
         else if (userTable.getSelectionModel().getSelectedItem() == null)
         {
             Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
@@ -124,7 +133,7 @@ public class AdminController
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(AdminLauncher.class.getResource("/view/AddUser.fxml"));
-        AnchorPane root = loader.load();
+        VBox root = loader.load();
 
         Stage primaryStage = new Stage();
 
@@ -133,18 +142,15 @@ public class AdminController
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+        primaryStage.setOnCloseRequest(we ->
         {
-            public void handle(WindowEvent we)
+            try
             {
-                try
-                {
-                    AdminLauncher.start();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                AdminLauncher.start();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
             }
         });
 
@@ -152,7 +158,7 @@ public class AdminController
     }
 
     /**
-     * Closes the add user screen
+     * Closes the add user screen.
      *
      * @param event the button event
      * @throws IOException throws an IOException
@@ -190,6 +196,9 @@ public class AdminController
             invalidInput.showAndWait();
             return;
         }
+        /*
+        If the name is empty, make the name the username
+         */
         else if (name.getText().isEmpty())
         {
             if (isAdminBox.isSelected())
@@ -197,6 +206,9 @@ public class AdminController
             else
                 User.commitUser(new User(username.getText(), username.getText(), password.getText()));
         }
+        /*
+        if name is not empty then just go to usual
+         */
         else
         {
             if (isAdminBox.isSelected())

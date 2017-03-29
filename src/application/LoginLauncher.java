@@ -4,6 +4,7 @@ import Controllers.LoginController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,12 +24,12 @@ public class LoginLauncher
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(LoginLauncher.class.getResource("/view/Login.fxml"));
-        AnchorPane root = loader.load();
-
-        LoginController lCont = loader.getController();
-        lCont.init();
+        VBox root = loader.load();
 
         Stage primaryStage = new Stage();
+
+        LoginController lCont = loader.getController();
+        lCont.init(primaryStage);
 
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));

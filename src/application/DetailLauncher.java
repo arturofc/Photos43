@@ -1,6 +1,9 @@
 package application;
 
-import Controllers.AdminController;
+import Controllers.DetailController;
+import Models.Album;
+import Models.Photo;
+import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,30 +15,24 @@ import java.io.IOException;
  * @author Calin Gilan
  * @author Arturo Corro
  */
-public class AdminLauncher
+public class DetailLauncher
 {
-    /**
-     * Start Admin Panel
-     *
-     * @throws IOException throws an IO Exception.
-     */
-    public static void start() throws IOException
+    public static void start(User u, Album a, Photo s) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(AdminLauncher.class.getResource("/view/Admin.fxml"));
+        loader.setLocation(UserLauncher.class.getResource("/view/Image.fxml"));
         BorderPane root = loader.load();
 
-        AdminController aCont = loader.getController();
-        aCont.init();
-
+        DetailController dCont = loader.getController();
+        dCont.init(u, a, s);
         Stage primaryStage = new Stage();
 
-        primaryStage.setTitle("Admin Panel");
+
+        primaryStage.setTitle("Image Details");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
 
+
     }
-
-
 }

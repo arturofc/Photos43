@@ -9,11 +9,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import static application.Photos.showError;
 
 /**
  * @author Calin Gilan
@@ -36,71 +38,116 @@ public class UserController
 
     private ObservableList<Album> data;
 
-    public void init(User u)
+    private Stage s;
+
+    public void init(User u, Stage s)
     {
-        usernameLabel.setText(u.getName());
+        this.usernameLabel.setText(u.getName());
+        this.s = s;
 
+        this.data = FXCollections.observableArrayList(Album.getAlbumList(u));
 
-        data = FXCollections.observableArrayList(Album.getAlbumList(u));
+        /*
+        Handles setting the columns to their proper data.
+         */
+        this.albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
+        this.photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
+        this.dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
 
-        albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
-        photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
-        dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
+        this.albumTable.setItems(data);
 
-        albumTable.setItems(data);
+        this.owner = u;
 
-        owner = u;
-
+        /*
+        if data is not empty set the first thing elected ie songlib
+         */
         if (!(data.isEmpty()))
         {
-            albumTable.getSelectionModel().select(0);
+            this.albumTable.getSelectionModel().select(0);
         }
 
-
     }
-
-
     /*
     Error Prone. Check this shit later
+     */
+
+    /**
+     * Logs the user out
+     *
+     * @param event the button event
+     * @throws Exception throws a possible exception
      */
     public void logout(ActionEvent event) throws Exception
     {
         Photos.logout(event);
     }
 
+    /**
+     * Rename the album
+     *
+     * @param event the button event
+     * @throws Exception throws an exception
+     */
     public void rename(ActionEvent event) throws Exception
     {
+        /*
+        If nothing is selected throw an error
+         */
         if (albumTable.getSelectionModel().getSelectedItem() == null)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("No Selection");
-            invalidInput.setHeaderText("No Item Selected");
-            invalidInput.setContentText("Make sure you have an album selected to rename");
-            invalidInput.showAndWait();
+            showError("No selection", "No item selected", "Make sure you have an album selected to rename");
             return;
         }
 
+        /*
+        Set the album to rename to aht is selcted
+         */
         Album a = albumTable.getSelectionModel().getSelectedItem();
 
+        /*
+        Create a text input dialog
+         */
         TextInputDialog dialog = new TextInputDialog(a.getName());
         dialog.setTitle("Rename");
         dialog.setHeaderText("Rename Album");
         dialog.setContentText("Enter a new album name");
+        /*
+        Wait for results
+         */
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
+
+        /*
+        if there is a result and the trimmed result length is 0
+         */
+        if (result.isPresent() && result.get().trim().length() == 0)
+        {
+            showError("Blank name", "Blank name", "Cannot have a blank name or name with only spaces.");
+            return;
+        }
+        /*
+        if result is present and its the same as the current album
+         */
+        else if (result.isPresent() && result.get().trim().equals(a.getName().trim()))
+        {
+            showError("Same name", "Same name as selected album", "Cannot have the same name as the selected album. ");
+            return;
+        }
+        else if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
             result.ifPresent(aName -> Album.renameAlbum(a, a.getOwner(), aName));
+        /*
+        otherwise, if theres a result and album name does exist throw an error
+         */
+
         else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("Duplicate");
-            invalidInput.setHeaderText("Duplicate album");
-            invalidInput.setContentText("Cannot rename an album that is a duplicate name");
-            invalidInput.showAndWait();
+            showError("Duplicate", "Duplicate album", "Cannot rename an album that is a duplicate name");
             return;
         }
 
-
+        /*
+        Redo entire table
+         */
         data = FXCollections.observableArrayList(Album.getAlbumList(owner));
         albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
         photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
@@ -110,25 +157,21 @@ public class UserController
 
     }
 
+    /**
+     * Delete the selected album
+     *
+     * @param event the button event
+     */
     public void delete(ActionEvent event)
     {
         if (data.isEmpty())
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            //invalidInput.initOwner(maingStage); FIND OUT IF THIS IS NECESSARY
-            invalidInput.setTitle("Can not remove");
-            invalidInput.setHeaderText("No albums");
-            invalidInput.setContentText("Please make sure to have a populated album list");
-            invalidInput.showAndWait();
+            showError("Can not remove", "No albums", "Please make sure to have a populated album list");
             return;
         }
         else if (albumTable.getSelectionModel().getSelectedItem() == null)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("No Selection");
-            invalidInput.setHeaderText("No Album Selected");
-            invalidInput.setContentText("Make sure you have an album selected to delete");
-            invalidInput.showAndWait();
+            showError("No selection", "No Album Selected", "Make sure you have an album selected to delete");
             return;
         }
 
@@ -156,36 +199,36 @@ public class UserController
         {
             alert.close();
         }
-
     }
 
+    /**
+     * Open the album
+     *
+     * @param event the button event
+     * @throws IOException throws an exception
+     */
     public void open(ActionEvent event) throws IOException
     {
         if (data.isEmpty())
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            //invalidInput.initOwner(maingStage); FIND OUT IF THIS IS NECESSARY
-            invalidInput.setTitle("Can not open");
-            invalidInput.setHeaderText("No albums");
-            invalidInput.setContentText("Please make sure to have a populated album list");
-            invalidInput.showAndWait();
+            showError("Can not open", "No albums", "Please make sure to have a populated album list");
             return;
         }
         else if (albumTable.getSelectionModel().getSelectedItem() == null)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("No Selection");
-            invalidInput.setHeaderText("No Album Selected");
-            invalidInput.setContentText("Make sure you have an album selected to open");
-            invalidInput.showAndWait();
+            showError("No Selection", "No Album Selected", "Make sure you have an album selected to open");
             return;
         }
-        ((Node) (event.getSource())).getScene().getWindow().hide();
 
-        AlbumLauncher.start(owner, albumTable.getSelectionModel().getSelectedItem());
+        AlbumLauncher.start(owner, albumTable.getSelectionModel().getSelectedItem(), s);
 
     }
 
+    /**
+     * Create a new album
+     *
+     * @param event the button event
+     */
     public void newAlbum(ActionEvent event)
     {
 
@@ -195,24 +238,27 @@ public class UserController
         dialog.setContentText("Enter a new album name");
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
-            result.ifPresent(aName -> Album.commitAlbum(new Album(aName, owner)));
-        else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
+        if (result.isPresent() && result.get().trim().length() == 0)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("Duplicate");
-            invalidInput.setHeaderText("Duplicate New Album");
-            invalidInput.setContentText("Cannot create a new album that is a duplicate name");
-            invalidInput.showAndWait();
+            showError("Blank name", "Blank name", "Cannot have a blank name or name with only spaces.");
             return;
         }
+        else if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
+            result.ifPresent(aName -> Album.commitAlbum(new Album(aName, owner)));
+
+        else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
+        {
+            showError("Duplicate", "Duplicate New Album", "Cannot create a new album that is a duplicate name");
+            return;
+        }
+
         data = FXCollections.observableArrayList(Album.getAlbumList(owner));
+
         albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
         photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
         dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
 
         albumTable.setItems(data);
     }
-
 
 }

@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.Album;
 import Models.User;
 import application.AdminLauncher;
 import application.UserLauncher;
@@ -9,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -23,21 +23,35 @@ public class LoginController
     @FXML
     private TextField passwordInput;
 
-    public void init()
+    private Stage s;
+
+    /**
+     * Init the controller
+     */
+    public void init(Stage stage)
     {
-/*      User u = new User("admin", "admin", "admin", true);
-        Album a = new Album("Darkness", u);
+        s = stage;
 
-        Album.commitAlbum(a);*/
         System.out.println("LoginLauncher Controller started");
-
     }
 
+    /**
+     * Returns if username and password is good
+     *
+     * @param username the username
+     * @param password the password
+     * @return true if correct false if not
+     */
     private boolean login(String username, String password)
     {
         return User.checkUserAndPass(username, password);
     }
 
+    /**
+     * Submit button
+     *
+     * @param event handles button click
+     */
     public void submit(Event event)
     {
         if (login(usernameInput.getText(), passwordInput.getText()) && User.getUser(usernameInput.getText()).isPresent())
@@ -46,14 +60,20 @@ public class LoginController
             showPasswordError();
     }
 
+    /**
+     * Launches the album view and possibly the admin view depending on if the user is an admin
+     *
+     * @param u       the user passed in
+     * @param isAdmin is admin or not
+     * @param event   the button click event
+     */
     private void launchView(User u, boolean isAdmin, Event event)
     {
         if (isAdmin)
         {
             try
             {
-                ((Node) (event.getSource())).getScene().getWindow().hide();
-                UserLauncher.start(u);
+                UserLauncher.start(u, s);
                 AdminLauncher.start();
 
             }
@@ -68,8 +88,7 @@ public class LoginController
         {
             try
             {
-                ((Node) (event.getSource())).getScene().getWindow().hide();
-                UserLauncher.start(u);
+                UserLauncher.start(u, s);
             }
             catch (IOException e)
             {
@@ -80,6 +99,9 @@ public class LoginController
         }
     }
 
+    /**
+     * Show bad combo error
+     */
     private void showPasswordError()
     {
         Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
@@ -90,6 +112,9 @@ public class LoginController
 
     }
 
+    /**
+     * Shows an io error
+     */
     private void showIOError()
     {
         Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);

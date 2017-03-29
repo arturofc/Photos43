@@ -38,7 +38,7 @@ public class Album implements Serializable
         }
         else
         {
-            return Collections.max(getDateList()).toString() + " - " + Collections.min(getDateList()).toString();
+            return Collections.min(getDateList()).toString() + " - " + Collections.max(getDateList()).toString();
         }
     }
 
@@ -87,6 +87,15 @@ public class Album implements Serializable
     public void setPhotos(HashSet<Photo> photos)
     {
         this.photos = photos;
+    }
+
+    public boolean addPhoto(Photo p)
+    {
+        return this.photos.add(p);
+    }
+    public boolean removePhoto(Photo p)
+    {
+        return this.photos.remove(p);
     }
 
     /**

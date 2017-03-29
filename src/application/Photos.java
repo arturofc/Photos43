@@ -1,6 +1,5 @@
 package application;
 
-
 import Controllers.LoginController;
 import com.sun.javafx.stage.StageHelper;
 import javafx.application.Application;
@@ -9,7 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,13 +31,14 @@ public class Photos extends Application
     public void start(Stage primaryStage) throws IOException
     {
 
+        Font.loadFont(getClass().getResourceAsStream("/src/fonts/Roboto-Black.ttf"), 14);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/Login.fxml"));
-        AnchorPane root = loader.load();
+        VBox root = loader.load();
 
 
         LoginController lCont = loader.getController();
-        lCont.init();
+        lCont.init(primaryStage);
 
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root));
@@ -61,6 +64,15 @@ public class Photos extends Application
         ((Node) (event.getSource())).getScene().getWindow().hide();
 
         LoginLauncher.start();
+    }
+
+    public static void showError(String t, String h, String c)
+    {
+        Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+        invalidInput.setTitle(t);
+        invalidInput.setHeaderText(h);
+        invalidInput.setContentText(c);
+        invalidInput.showAndWait();
     }
 
     /**
