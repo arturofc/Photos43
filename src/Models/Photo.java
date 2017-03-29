@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -21,27 +22,27 @@ public class Photo implements Serializable
     LocalDate date;
 
 
-    public Photo(String name, Set<String> tags, String path)
+    public Photo(String name, Set<String> tags, File file)
     {
         this.name = name;
         this.tags = tags;
-        this.photoFile = new File(path);
+        this.photoFile = file;
         this.date = LocalDate.now();
     }
 
-    public Photo(String name, String path)
+    public Photo(String name, File file)
     {
         this.name = name;
         this.tags = new TreeSet<>();
-        this.photoFile = new File(path);
+        this.photoFile = file;
         this.date = LocalDate.now();
     }
 
-    public Photo(String name, Set<String> tags, String path, LocalDate date)
+    public Photo(String name, Set<String> tags, File file, LocalDate date)
     {
         this.name = name;
         this.tags = tags;
-        this.photoFile = new File(path);
+        this.photoFile = file;
         this.date = date;
     }
 
@@ -86,8 +87,34 @@ public class Photo implements Serializable
         return date;
     }
 
+    public File getPhotoFile()
+    {
+        return this.photoFile;
+    }
+
     public void setDate(LocalDate date)
     {
         this.date = date;
+    }
+
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this)
+            return true;
+
+        if (!(o instanceof Photo))
+            return false;
+
+        Photo p = (Photo) o;
+
+        return (this.photoFile.equals(p.getPhotoFile()));
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(this.photoFile);
     }
 }

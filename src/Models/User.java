@@ -148,7 +148,7 @@ public class User implements Serializable
      *
      * @return hashcode for user
      */
-
+    @Override
     public int hashCode()
     {
         return Objects.hash(this.username);

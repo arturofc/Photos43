@@ -12,17 +12,17 @@ import java.util.*;
 public class Album implements Serializable
 {
     private String name;
-    private Set<Photo> photos;
+    private HashSet<Photo> photos;
     private User owner;
 
     public Album(String name, User owner)
     {
         this.name = name;
-        this.photos = new TreeSet<>();
+        this.photos = new HashSet<>();
         this.owner = owner;
     }
 
-    public Album(String name, Set<Photo> photos, User owner)
+    public Album(String name, HashSet<Photo> photos, User owner)
     {
         this.name = name;
         this.photos = photos;
@@ -67,7 +67,7 @@ public class Album implements Serializable
         this.name = name;
     }
 
-    public Set<Photo> getPhotos()
+    public HashSet<Photo> getPhotos()
     {
         return photos;
     }
@@ -83,7 +83,7 @@ public class Album implements Serializable
     }
 
 
-    public void setPhotos(Set<Photo> photos)
+    public void setPhotos(HashSet<Photo> photos)
     {
         this.photos = photos;
     }
@@ -108,6 +108,7 @@ public class Album implements Serializable
         return (this.name.equals(a.getName()) && this.owner.equals(a.getOwner()));
     }
 
+    @Override
     public int hashCode()
     {
         return Objects.hash(this.name, this.owner);
