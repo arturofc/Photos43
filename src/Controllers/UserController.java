@@ -85,7 +85,18 @@ public class UserController
        dialog.setContentText("Enter a new album name");
        Optional<String> result = dialog.showAndWait();
 
-       result.ifPresent(aName -> Album.renameAlbum(a, a.getOwner(), aName));
+       if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
+           result.ifPresent(aName -> Album.renameAlbum(a, a.getOwner(), aName));
+       else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
+       {
+           Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+           invalidInput.setTitle("Duplicate");
+           invalidInput.setHeaderText("Duplicate album");
+           invalidInput.setContentText("Cannot rename an album that is a duplicate name");
+           invalidInput.showAndWait();
+           return;
+       }
+
 
        data = FXCollections.observableArrayList(Album.getAlbumList(owner));
        albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
@@ -142,6 +153,39 @@ public class UserController
             alert.close();
         }
 
+    }
+
+    public void open (ActionEvent event)
+    {
+
+    }
+
+    public void newAlbum (ActionEvent event)
+    {
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename");
+        dialog.setHeaderText("Rename Album");
+        dialog.setContentText("Enter a new album name");
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
+            result.ifPresent(aName -> Album.commitAlbum(new Album(aName, owner)));
+        else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("Duplicate");
+            invalidInput.setHeaderText("Duplicate New Album");
+            invalidInput.setContentText("Cannot create a new album that is a duplicate name");
+            invalidInput.showAndWait();
+            return;
+        }
+        data = FXCollections.observableArrayList(Album.getAlbumList(owner));
+        albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
+        photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
+        dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
+
+        albumTable.setItems(data);
     }
 
 

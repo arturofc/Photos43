@@ -214,7 +214,9 @@ public class Album implements Serializable
     }
     public static boolean renameAlbum(Album a, User u, String newName)
     {
-        if (doesAlbumNameExist(a.getName(), a.getOwner()))
+        if (doesAlbumNameExist(newName, u))
+            return false;
+        else if (doesAlbumNameExist(a.getName(), a.getOwner()))
         {
             ArrayList<Album> aList = Album.getAlbumList(u);
             Album oldAlbum;
