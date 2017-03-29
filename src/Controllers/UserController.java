@@ -2,14 +2,17 @@ package Controllers;
 
 import Models.Album;
 import Models.User;
+import application.AlbumLauncher;
 import application.Photos;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -156,8 +159,30 @@ public class UserController
 
     }
 
-    public void open(ActionEvent event)
+    public void open(ActionEvent event) throws IOException
     {
+        if (data.isEmpty())
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            //invalidInput.initOwner(maingStage); FIND OUT IF THIS IS NECESSARY
+            invalidInput.setTitle("Can not open");
+            invalidInput.setHeaderText("No albums");
+            invalidInput.setContentText("Please make sure to have a populated album list");
+            invalidInput.showAndWait();
+            return;
+        }
+        else if (albumTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("No Selection");
+            invalidInput.setHeaderText("No Album Selected");
+            invalidInput.setContentText("Make sure you have an album selected to open");
+            invalidInput.showAndWait();
+            return;
+        }
+        ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        AlbumLauncher.start(owner, albumTable.getSelectionModel().getSelectedItem());
 
     }
 

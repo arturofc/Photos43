@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AlbumController">
    <children>
       <Button layoutX="531.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button layoutX="6.0" layoutY="44.0" mnemonicParsing="false" text="New Photo" />
       <Button layoutX="100.0" layoutY="44.0" mnemonicParsing="false" text="Edit Photo" />
       <Button layoutX="192.0" layoutY="44.0" mnemonicParsing="false" text="Delete Photo" />
       <Button layoutX="473.0" layoutY="8.0" mnemonicParsing="false" text="Back" />
-      <Label layoutX="6.0" text="Album Name">
+      <Label fx:id="albumLabel" layoutX="6.0" text="Album Name">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TilePane layoutY="79.0" prefHeight="521.0" prefWidth="600.0" />
+      <TilePane fx:id="imageTable" layoutY="79.0" prefHeight="521.0" prefWidth="600.0" />
       <Button layoutX="300.0" layoutY="44.0" mnemonicParsing="false" text="Move/Copy Photo" />
    </children>
 </AnchorPane>
