@@ -28,6 +28,7 @@ public class Photo implements Serializable
         this.photoFile = new File(path);
         this.date = LocalDate.now();
     }
+
     public Photo(String name, String path)
     {
         this.name = name;
@@ -35,14 +36,14 @@ public class Photo implements Serializable
         this.photoFile = new File(path);
         this.date = LocalDate.now();
     }
-    public Photo (String name, Set<String> tags, String path, LocalDate date)
+
+    public Photo(String name, Set<String> tags, String path, LocalDate date)
     {
         this.name = name;
         this.tags = tags;
         this.photoFile = new File(path);
         this.date = date;
     }
-
 
 
     public BufferedImage getImage()
@@ -62,16 +63,19 @@ public class Photo implements Serializable
 
     public void addTag(Set<String> tags)
     {
-       this.tags.addAll(tags);
+        this.tags.addAll(tags);
     }
+
     public void addTag(String tag)
     {
         this.tags.add(tag);
     }
+
     private void deleteTag(String tag)
     {
         this.tags.remove(tag);
     }
+
     private Set<String> getTags()
     {
         return this.tags;

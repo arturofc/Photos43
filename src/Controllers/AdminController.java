@@ -115,6 +115,7 @@ public class AdminController
 
     /**
      * Handles the add user button
+     *
      * @param event the button event
      * @throws IOException throws an IOException
      */
@@ -133,7 +134,8 @@ public class AdminController
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+        {
             public void handle(WindowEvent we)
             {
                 try
@@ -148,11 +150,11 @@ public class AdminController
         });
 
 
-
     }
 
     /**
      * Closes the add user screen
+     *
      * @param event the button event
      * @throws IOException throws an IOException
      */
@@ -164,6 +166,7 @@ public class AdminController
 
     /**
      * Handles adding a user
+     *
      * @param event the add button event
      * @throws IOException throws an IOException
      */
@@ -215,6 +218,7 @@ public class AdminController
 
     /**
      * Handles logging out
+     *
      * @param event the logout button event
      * @throws Exception throws an Exception
      */

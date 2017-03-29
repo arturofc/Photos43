@@ -16,6 +16,7 @@ public class LoginLauncher
 {
     /**
      * Starts the login screen
+     *
      * @throws IOException throws an IOException
      */
     public static void start() throws IOException

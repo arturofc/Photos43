@@ -22,6 +22,7 @@ public class Photos extends Application
 {
     /**
      * Starts Login (For when program first runs)
+     *
      * @param primaryStage the stage that is passed in by launch
      * @throws IOException throws an IOException
      */
@@ -43,6 +44,7 @@ public class Photos extends Application
 
     /**
      * Global logout function
+     *
      * @param event the button event that is passed in
      * @throws Exception throws an Exception
      */
@@ -69,14 +71,13 @@ public class Photos extends Application
 
     /**
      * Main
+     *
      * @param args Argggggghhhs
      */
     public static void main(String[] args)
     {
         launch(args);
     }
-
-
 
 
 }

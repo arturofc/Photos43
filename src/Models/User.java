@@ -20,7 +20,8 @@ public class User implements Serializable
 
     /**
      * User constructor
-     * @param name display name
+     *
+     * @param name     display name
      * @param username username
      * @param password password
      */
@@ -35,10 +36,11 @@ public class User implements Serializable
 
     /**
      * User constructor
-     * @param name display name
+     *
+     * @param name     display name
      * @param username username
      * @param password password
-     * @param isAdmin if user is admin or not
+     * @param isAdmin  if user is admin or not
      */
     public User(String name, String username, String password, boolean isAdmin)
     {
@@ -143,6 +145,7 @@ public class User implements Serializable
 
     /**
      * Override hashcode for users. Users have same hashcode if they have the same username
+     *
      * @return hashcode for user
      */
 
@@ -158,6 +161,7 @@ public class User implements Serializable
 
     /**
      * Get stored user list
+     *
      * @return list of all users
      */
     public static ArrayList<User> getUserList()
@@ -260,7 +264,8 @@ public class User implements Serializable
             uL.remove(u);
             uL.add(u);
             System.out.println("Username already exists, overwriting old user");
-        } else
+        }
+        else
         {
             uL.add(u);
         }
@@ -344,6 +349,7 @@ public class User implements Serializable
 
     /**
      * Given a user, delete it
+     *
      * @param u user to delete
      * @return true if deleted, false if some kind of error
      */
@@ -392,6 +398,7 @@ public class User implements Serializable
 
     /**
      * Given a username, return a user
+     *
      * @param username username to get
      * @return Optional which contains a user if the user exists
      */

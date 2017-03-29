@@ -16,6 +16,7 @@ public class AdminLauncher
 {
     /**
      * Start Admin Panel
+     *
      * @throws IOException throws an IO Exception.
      */
     public static void start() throws IOException

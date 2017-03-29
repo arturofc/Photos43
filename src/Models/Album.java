@@ -56,6 +56,7 @@ public class Album implements Serializable
     {
         return getPhotos().size();
     }
+
     public String getName()
     {
         return name;
@@ -129,7 +130,11 @@ public class Album implements Serializable
 
             HashSet<Album> aL = (HashSet<Album>) o.readObject();
 
-            albums.addAll(aL);
+            for (Album a : aL)
+            {
+                if (a.getOwner().equals(u))
+                    albums.add(a);
+            }
 
             return albums;
 
@@ -212,6 +217,7 @@ public class Album implements Serializable
             return false;
         }
     }
+
     public static boolean renameAlbum(Album a, User u, String newName)
     {
         if (doesAlbumNameExist(newName, u))
@@ -221,14 +227,14 @@ public class Album implements Serializable
             ArrayList<Album> aList = Album.getAlbumList(u);
             Album oldAlbum;
 
-            for (Album x: aList)
+            for (Album x : aList)
             {
                 if (x.equals(a))
                 {
-                   oldAlbum = x;
-                   Album.deleteAlbum(x);
-                   oldAlbum.setName(newName);
-                   return (Album.commitAlbum(oldAlbum));
+                    oldAlbum = x;
+                    Album.deleteAlbum(x);
+                    oldAlbum.setName(newName);
+                    return (Album.commitAlbum(oldAlbum));
                 }
             }
             return false;
@@ -237,6 +243,7 @@ public class Album implements Serializable
         else
             return false;
     }
+
     public static boolean deleteAlbum(Album a)
     {
         HashSet<Album> aL = new HashSet<>();

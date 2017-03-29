@@ -67,45 +67,46 @@ public class UserController
 
     public void rename(ActionEvent event) throws Exception
     {
-       if (albumTable.getSelectionModel().getSelectedItem() == null)
-       {
-           Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-           invalidInput.setTitle("No Selection");
-           invalidInput.setHeaderText("No Item Selected");
-           invalidInput.setContentText("Make sure you have an album selected to rename");
-           invalidInput.showAndWait();
-           return;
-       }
+        if (albumTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("No Selection");
+            invalidInput.setHeaderText("No Item Selected");
+            invalidInput.setContentText("Make sure you have an album selected to rename");
+            invalidInput.showAndWait();
+            return;
+        }
 
-       Album a = albumTable.getSelectionModel().getSelectedItem();
+        Album a = albumTable.getSelectionModel().getSelectedItem();
 
-       TextInputDialog dialog = new TextInputDialog(a.getName());
-       dialog.setTitle("Rename");
-       dialog.setHeaderText("Rename Album");
-       dialog.setContentText("Enter a new album name");
-       Optional<String> result = dialog.showAndWait();
+        TextInputDialog dialog = new TextInputDialog(a.getName());
+        dialog.setTitle("Rename");
+        dialog.setHeaderText("Rename Album");
+        dialog.setContentText("Enter a new album name");
+        Optional<String> result = dialog.showAndWait();
 
-       if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
-           result.ifPresent(aName -> Album.renameAlbum(a, a.getOwner(), aName));
-       else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
-       {
-           Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-           invalidInput.setTitle("Duplicate");
-           invalidInput.setHeaderText("Duplicate album");
-           invalidInput.setContentText("Cannot rename an album that is a duplicate name");
-           invalidInput.showAndWait();
-           return;
-       }
+        if (result.isPresent() && !Album.doesAlbumNameExist(result.get(), owner))
+            result.ifPresent(aName -> Album.renameAlbum(a, a.getOwner(), aName));
+        else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), owner))
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("Duplicate");
+            invalidInput.setHeaderText("Duplicate album");
+            invalidInput.setContentText("Cannot rename an album that is a duplicate name");
+            invalidInput.showAndWait();
+            return;
+        }
 
 
-       data = FXCollections.observableArrayList(Album.getAlbumList(owner));
-       albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
-       photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
-       dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
+        data = FXCollections.observableArrayList(Album.getAlbumList(owner));
+        albumNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getName()));
+        photoCountCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().photoCount())));
+        dateRangeCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange()));
 
-       albumTable.setItems(data);
+        albumTable.setItems(data);
 
     }
+
     public void delete(ActionEvent event)
     {
         if (data.isEmpty())
@@ -155,12 +156,12 @@ public class UserController
 
     }
 
-    public void open (ActionEvent event)
+    public void open(ActionEvent event)
     {
 
     }
 
-    public void newAlbum (ActionEvent event)
+    public void newAlbum(ActionEvent event)
     {
 
         TextInputDialog dialog = new TextInputDialog();

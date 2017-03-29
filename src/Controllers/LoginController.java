@@ -63,7 +63,8 @@ public class LoginController
                 showIOError();
             }
 
-        } else
+        }
+        else
         {
             try
             {
