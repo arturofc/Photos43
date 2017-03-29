@@ -2,13 +2,14 @@ package Models;
 
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
  * @author Calin Gilan
  * @author Arturo Corro
  */
-public class Album
+public class Album implements Serializable
 {
     private String name;
     private Set<Photo> photos;
@@ -28,6 +29,33 @@ public class Album
         this.owner = owner;
     }
 
+    public String getDateRange()
+    {
+        if (photoCount() == 0)
+        {
+            return "";
+        }
+        else
+        {
+            return Collections.max(getDateList()).toString() + " - " + Collections.min(getDateList()).toString();
+        }
+    }
+
+    private ArrayList<LocalDate> getDateList()
+    {
+        ArrayList<LocalDate> d = new ArrayList<>();
+        for (Photo a : getPhotos())
+        {
+            d.add(a.getDate());
+        }
+
+        return d;
+    }
+
+    public int photoCount()
+    {
+        return getPhotos().size();
+    }
     public String getName()
     {
         return name;
@@ -89,7 +117,7 @@ public class Album
     ---------------------------------------
      */
 
-    public static ArrayList<Album> getAlbums(User u)
+    public static ArrayList<Album> getAlbumList(User u)
     {
         ArrayList<Album> albums = new ArrayList<>();
 
@@ -162,6 +190,90 @@ public class Album
         }
         catch (IOException e)
         {
+            return false;
+        }
+    }
+
+    public static boolean doesAlbumNameExist(String name, User u)
+    {
+        try
+        {
+            FileInputStream f = new FileInputStream("Albums.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+
+            HashSet<Album> uL = (HashSet<Album>) o.readObject();
+
+            return uL.contains(new Album(name, u));
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            return false;
+        }
+    }
+    public static boolean renameAlbum(Album a, User u, String newName)
+    {
+        if (doesAlbumNameExist(a.getName(), a.getOwner()))
+        {
+            ArrayList<Album> aList = Album.getAlbumList(u);
+            Album oldAlbum;
+
+            for (Album x: aList)
+            {
+                if (x.equals(a))
+                {
+                   oldAlbum = x;
+                   Album.deleteAlbum(x);
+                   oldAlbum.setName(newName);
+                   return (Album.commitAlbum(oldAlbum));
+                }
+            }
+            return false;
+
+        }
+        else
+            return false;
+    }
+    public static boolean deleteAlbum(Album a)
+    {
+        HashSet<Album> aL = new HashSet<>();
+
+        /*
+        If you cannot retrieve the file you cannot remove the user
+         */
+        try
+        {
+            FileInputStream f = new FileInputStream("Albums.ser");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+            aL = (HashSet<Album>) o.readObject();
+
+        }
+        catch (ClassNotFoundException | IOException e)
+        {
+            System.out.println("Error removing album (Opening album list) " + e.toString());
+            return false;
+        }
+
+        if (aL.contains(a))
+        {
+            aL.remove(a);
+
+        }
+
+        try
+        {
+            FileOutputStream fo = new FileOutputStream("Albums.ser");
+            ObjectOutputStream oo = new ObjectOutputStream(fo);
+
+            oo.writeObject(aL);
+            return true;
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error storing updated album list while trying to remove " + e.toString());
             return false;
         }
     }

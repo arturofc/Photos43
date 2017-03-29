@@ -77,6 +77,15 @@ public class AdminController
             invalidInput.showAndWait();
             return;
         }
+        else if (userTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+            invalidInput.setTitle("No Selection");
+            invalidInput.setHeaderText("No user selected");
+            invalidInput.setContentText("Make sure you have a user selected to delete");
+            invalidInput.showAndWait();
+            return;
+        }
 
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

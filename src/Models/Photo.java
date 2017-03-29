@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Calin Gilan
@@ -16,18 +18,31 @@ public class Photo implements Serializable
     private String name;
     private Set<String> tags;
     private File photoFile;
+    LocalDate date;
+
 
     public Photo(String name, Set<String> tags, String path)
     {
         this.name = name;
         this.tags = tags;
         this.photoFile = new File(path);
+        this.date = LocalDate.now();
     }
     public Photo(String name, String path)
     {
         this.name = name;
+        this.tags = new TreeSet<>();
         this.photoFile = new File(path);
+        this.date = LocalDate.now();
     }
+    public Photo (String name, Set<String> tags, String path, LocalDate date)
+    {
+        this.name = name;
+        this.tags = tags;
+        this.photoFile = new File(path);
+        this.date = date;
+    }
+
 
 
     public BufferedImage getImage()
@@ -62,4 +77,13 @@ public class Photo implements Serializable
         return this.tags;
     }
 
+    public LocalDate getDate()
+    {
+        return date;
+    }
+
+    public void setDate(LocalDate date)
+    {
+        this.date = date;
+    }
 }

@@ -13,15 +13,16 @@
    <children>
       <Button onAction="#logout" layoutX="531.0" layoutY="8.0" mnemonicParsing="false" text="Logout" />
       <Button layoutX="6.0" layoutY="44.0" mnemonicParsing="false" text="New Album" />
-      <Button layoutX="101.0" layoutY="44.0" mnemonicParsing="false" text="Edit Album" />
-      <TableView layoutY="78.0" prefHeight="484.0" prefWidth="600.0">
+      <Button onAction="#rename" layoutX="101.0" layoutY="44.0" mnemonicParsing="false" text="Rename Album" />
+
+      <TableView fx:id="albumTable" layoutY="78.0" prefHeight="484.0" prefWidth="600.0">
         <columns>
-          <TableColumn prefWidth="311.0" text="Album Name" />
-          <TableColumn minWidth="0.0" prefWidth="92.0" text="Photo Count" />
-            <TableColumn prefWidth="196.0" text="Dates" />
+            <TableColumn fx:id="albumNameCol" prefWidth="311.0" text="Album Name" />
+            <TableColumn fx:id="photoCountCol" minWidth="0.0" prefWidth="92.0" text="Photo Count" />
+            <TableColumn fx:id="dateRangeCol" prefWidth="196.0" text="Dates" />
         </columns>
       </TableView>
-      <Button layoutX="195.0" layoutY="44.0" mnemonicParsing="false" text="Delete Album" />
+      <Button onAction="#delete" layoutX="195.0" layoutY="44.0" mnemonicParsing="false" text="Delete Album" />
       <Label fx:id="usernameLabel" layoutX="6.0" text="User Name">
          <font>
             <Font size="36.0" />

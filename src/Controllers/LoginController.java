@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Album;
 import Models.User;
 import application.AdminLauncher;
 import application.UserLauncher;
@@ -25,7 +26,9 @@ public class LoginController
     public void init()
     {
         User u = new User("admin", "admin", "admin", true);
-        User.commitUser(u);
+        Album a = new Album("Darkness", u);
+
+        Album.commitAlbum(a);
         System.out.println("LoginLauncher Controller started");
 
     }

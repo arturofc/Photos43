@@ -39,7 +39,6 @@ public class Photos extends Application
         primaryStage.setResizable(false);
         primaryStage.show();
 
-
     }
 
     /**
