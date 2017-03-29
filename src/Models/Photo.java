@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,12 +18,12 @@ import java.util.TreeSet;
 public class Photo implements Serializable
 {
     private String name;
-    private Set<String> tags;
+    private HashMap<String, String> tags;
     private File photoFile;
     LocalDate date;
 
 
-    public Photo(String name, Set<String> tags, File file)
+    public Photo(String name, HashMap<String, String> tags, File file)
     {
         this.name = name;
         this.tags = tags;
@@ -33,12 +34,12 @@ public class Photo implements Serializable
     public Photo(String name, File file)
     {
         this.name = name;
-        this.tags = new TreeSet<>();
+        this.tags = new HashMap<>();
         this.photoFile = file;
         this.date = LocalDate.now();
     }
 
-    public Photo(String name, Set<String> tags, File file, LocalDate date)
+    public Photo(String name, HashMap<String, String> tags, File file, LocalDate date)
     {
         this.name = name;
         this.tags = tags;
@@ -62,22 +63,18 @@ public class Photo implements Serializable
         return toReturn;
     }
 
-    public void addTag(Set<String> tags)
+    public void addTag(HashMap<String, String> tags)
     {
-        this.tags.addAll(tags);
+        this.tags.putAll(tags);
     }
 
-    public void addTag(String tag)
+    public void addTag(String key, String value)
     {
-        this.tags.add(tag);
+        this.tags.put(key, value);
     }
 
-    private void deleteTag(String tag)
-    {
-        this.tags.remove(tag);
-    }
 
-    private Set<String> getTags()
+    private HashMap<String, String> getTags()
     {
         return this.tags;
     }

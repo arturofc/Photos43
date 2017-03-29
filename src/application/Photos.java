@@ -28,9 +28,11 @@ public class Photos extends Application
      */
     public void start(Stage primaryStage) throws IOException
     {
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/Login.fxml"));
         AnchorPane root = loader.load();
+
 
         LoginController lCont = loader.getController();
         lCont.init();

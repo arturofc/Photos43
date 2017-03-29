@@ -60,6 +60,7 @@ public class AlbumController
         imageTable.setHgap(15);
 
 
+
         /*
         From the global album variable, run get photos and get the set
         Create imageView and add to the imageTable
@@ -149,7 +150,8 @@ public class AlbumController
         try
         {
             Image i = new Image(new FileInputStream(p.getPhotoFile()), 500, 500, true, true);
-            Text t = new Text(p.getName());
+            Label l = new Label(p.getName());
+            l.maxWidth(10);
             ImageView img = new ImageView(i);
 
             img.setViewport(new Rectangle2D(150, 125, 150, 100));
@@ -157,7 +159,7 @@ public class AlbumController
 
             v.setSpacing(6);
             v.getChildren().add(img);
-            v.getChildren().add(t);
+            v.getChildren().add(l);
         }
         catch (FileNotFoundException e)
         {
@@ -166,4 +168,5 @@ public class AlbumController
         }
         return v;
     }
+
 }

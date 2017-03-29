@@ -191,7 +191,7 @@ public class UserController
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Rename");
-        dialog.setHeaderText("Rename Album");
+        dialog.setHeaderText("New Album");
         dialog.setContentText("Enter a new album name");
         Optional<String> result = dialog.showAndWait();
 
