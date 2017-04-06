@@ -101,3 +101,13 @@
 {
     -fx-graphic: url("../Resources/addTag.png");
 }
+#detailRemoveKey
+{
+    -fx-background-color: #FF3D00;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 4, 0, 0, 0);
+}
+#detailRemoveKey:hover
+{
+    -fx-background-color: #BF360C;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 3, 0, 0, 0);
+}

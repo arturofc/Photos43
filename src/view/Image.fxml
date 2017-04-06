@@ -28,7 +28,7 @@
                                         <Font name="Roboto Light" size="15.0" />
                                     </font>
                                 </Label>
-                                <Button id="imageEditButton1" fx:id="editCaption" mnemonicParsing="false" scaleX="0.5" scaleY="0.5" scaleZ="0.5" translateY="-15.0">
+                                <Button id="imageEditButton1" fx:id="editCaption" onAction="#editCaption" mnemonicParsing="false" scaleX="0.5" scaleY="0.5" scaleZ="0.5" translateY="-15.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -77,10 +77,9 @@
                         <Insets right="15.0" />
                      </VBox.margin>
                   </TableView>
-                  <HBox prefHeight="100.0" prefWidth="200.0" translateY="-55.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" translateY="-55.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="100.0" text="Remove Key" />
-                        <Button mnemonicParsing="false" prefHeight="100.0" text="Rename Key" />
+                        <Button id="detailRemoveKey" onAction="#removeKey" mnemonicParsing="false" prefHeight="100.0" text="Remove Key" textFill="WHITE" />
                      </children>
                      <VBox.margin>
                         <Insets right="15.0" />

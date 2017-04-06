@@ -91,7 +91,9 @@ public class AlbumController
 
         albumLabel.setText(album.getName());
 
-
+        /*
+        Handles setting the action event for the move-to menu button. Could prolly be moved somewhere else? Like on the menu button click itself
+         */
         for (Album x : Album.getAlbumList(user))
         {
             MenuItem m = new MenuItem(x.getName());
@@ -123,18 +125,17 @@ public class AlbumController
                 }
                 else
                 {
-                    Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-                    invalidInput.setTitle("No Selection");
-                    invalidInput.setHeaderText("No Photo Selected");
-                    invalidInput.setContentText("You must select a photo to move.");
-                    invalidInput.showAndWait();
+                    showError("No Selection", "No Photo Selected", "You must select a photo to move");
                 }
             });
 
+            /*
+            If the album name is not equal to the current album then add that to the move to menu list
+             */
             if (!x.equals(album))
                 moveToMenu.getItems().add(m);
         }
-
+        
     }
 
     /**
@@ -216,11 +217,7 @@ public class AlbumController
     {
         if (album == null || album.getPhotos().size() == 0)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("Empty Album");
-            invalidInput.setHeaderText("No photos in album");
-            invalidInput.setContentText("Can't display an empty album.");
-            invalidInput.showAndWait();
+            showError("Empty Album", "No photos in album", "Can't display an empty album");
             return;
         }
 
@@ -347,11 +344,7 @@ public class AlbumController
          */
         if (s == null)
         {
-            Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
-            invalidInput.setTitle("No Selection");
-            invalidInput.setHeaderText("No Photo Selected");
-            invalidInput.setContentText("You must select a photo to delete.");
-            invalidInput.showAndWait();
+            showError("No Selection", "No Photo Selected", "You must select a photo to delete");
 
         }
         else

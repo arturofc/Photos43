@@ -3,6 +3,7 @@ package Controllers;
 import Models.Album;
 import Models.Photo;
 import Models.User;
+import application.Photos;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Calin Gilan
@@ -83,6 +85,7 @@ public class DetailController
                 keyCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getKey()));
                 valCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue()));
                 keyValTable.setItems(data);
+
             }
             catch (FileNotFoundException e)
             {
@@ -99,6 +102,12 @@ public class DetailController
          */
         String k = keyInput.getText();
         String v = valInput.getText();
+
+        if (k.trim().length() == 0 || v.trim().length() == 0)
+        {
+            Photos.showError("Blank entry", "Empty key : value.", "Cannot leave either key or value input blank");
+            return;
+        }
 
         /*
         Get the photo set from from the album
@@ -151,12 +160,70 @@ public class DetailController
         valCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue()));
         keyValTable.setItems(data);
 
+    }
+
+    public void removeKey(ActionEvent event)
+    {
+        if(keyValTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Photos.showError("No selection", "No key : value selected", "Please selected a key : value to remove");
+        }
+        else
+        {
+            Pair<String, String> t = keyValTable.getSelectionModel().getSelectedItem();
+
+            photo.removeTag(t.getKey(), t.getValue());
+
+            album.addPhoto(photo);
+
+            Album.commitAlbum(album);
+
+            ArrayList<Pair<String,String>> tempList = new ArrayList<>();
+
+            /*
+            Add the hashstuff to it
+             */
+
+            for (Map.Entry<String, HashSet<String>> e : photo.getTags().entrySet())
+            {
+                e.getValue().forEach(x -> tempList.add(new Pair<>(e.getKey(), x)));
+            }
 
 
+            data = FXCollections.observableArrayList(tempList);
 
+            keyCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getKey()));
+            valCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue()));
+            keyValTable.setItems(data);
 
+        }
+    }
 
+    public void editCaption(ActionEvent event)
+    {
+               /*
+        Create a text input dialog
+         */
+        TextInputDialog dialog = new TextInputDialog(photo.getName());
+        dialog.setTitle("Recaption");
+        dialog.setHeaderText("Rename photo");
+        dialog.setContentText("Enter a new caption");
+        /*
+        Wait for results
+         */
+        Optional<String> result = dialog.showAndWait();
 
+        if (!result.isPresent() || result.get().trim().length() == 0)
+        {
+            Photos.showError("Blank caption", "Blank caption entered", "Cannot enter a blank caption");
+        }
+        else
+        {
+            photo.setName(result.get());
+            album.addPhoto(photo);
+            Album.commitAlbum(album);
+            captionLabel.setText(photo.getName());
+        }
 
     }
 }
