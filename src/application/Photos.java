@@ -76,7 +76,7 @@ public class Photos extends Application
     }
 
     /**
-     * Global platform exit
+     * Global platform exi t
      */
     public static void exit()
     {
