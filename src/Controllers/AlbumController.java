@@ -382,11 +382,11 @@ public class AlbumController
     {
         if (imageTable.getChildren().isEmpty())
         {
-            showError("Empty", "Empty Album", "Must have photos in album to show details");
+            showError("Empty", "Empty Album", "Must have photos in album to show details.");
         }
         else if (s == null)
         {
-            showError("No Selection", "No Photo Selection", "Please select a photo to open ");
+            showError("No Selection", "No Photo Selection", "Please select a photo to open.");
         }
         else
         {
