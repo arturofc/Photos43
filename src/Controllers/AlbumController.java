@@ -435,7 +435,7 @@ public class AlbumController
                     showError("No Selection", "No Photo Selected", "You must select a photo to move");
                 }
             });
-            
+
                         /*
             If the album name is not equal to the current album then add that to the move to menu list
              */
