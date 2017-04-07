@@ -23,6 +23,7 @@ public class AlbumLauncher
      *
      * @param u user that is passed in when logged in.
      * @param a the album being launched
+     * @param stage stage which will displayed to the user
      * @throws IOException throws an IOException
      */
     public static void start(User u, Album a, Stage s) throws IOException
