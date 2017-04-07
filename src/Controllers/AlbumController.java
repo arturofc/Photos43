@@ -9,6 +9,8 @@ import application.SlideshowLauncher;
 import application.UserLauncher;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,6 +51,8 @@ public class AlbumController
     public TilePane imageTable;
     @FXML
     public MenuButton moveToMenu;
+    @FXML
+    public MenuButton copyToMenu;
 
     private User user;
     private Album album;
@@ -91,51 +95,24 @@ public class AlbumController
 
         albumLabel.setText(album.getName());
 
+        copyTo();
+        moveTo();
         /*
-        Handles setting the action event for the move-to menu button. Could prolly be moved somewhere else? Like on the menu button click itself
+        Basicaly refresh on refocus
          */
-        for (Album x : Album.getAlbumList(user))
+        stg.focusedProperty().addListener((observable, oldValue, newValue) ->
         {
-            MenuItem m = new MenuItem(x.getName());
-            m.setOnAction(event ->
+            s = null;
+            selected = null;
+
+            imageTable.getChildren().clear();
+
+            for (Photo p : album.getPhotos())
             {
-                if (s != null)
-                {
-                    x.addPhoto(s);
+                imageTable.getChildren().addAll(createTile(p));
+            }
+        });
 
-                    Album.commitAlbum(x);
-                    album.removePhoto(s);
-
-                    HashSet<Photo> pSet = album.getPhotos();
-                    pSet.remove(s);
-
-                    s = null;
-                    selected = null;
-
-                    album.setPhotos(pSet);
-                    imageTable.getChildren().clear();
-
-                    for (Photo p : album.getPhotos())
-                    {
-                        imageTable.getChildren().addAll(createTile(p));
-                    }
-
-                    Album.commitAlbum(album);
-
-                }
-                else
-                {
-                    showError("No Selection", "No Photo Selected", "You must select a photo to move");
-                }
-            });
-
-            /*
-            If the album name is not equal to the current album then add that to the move to menu list
-             */
-            if (!x.equals(album))
-                moveToMenu.getItems().add(m);
-        }
-        
     }
 
     /**
@@ -386,5 +363,86 @@ public class AlbumController
             DetailLauncher.start(user, album, s);
         }
     }
+
+    public void moveTo()
+    {
+        for (Album x : Album.getAlbumList(user))
+        {
+            MenuItem m = new MenuItem(x.getName());
+            m.setOnAction(event ->
+            {
+                if (s != null)
+                {
+                    x.addPhoto(s);
+
+                    Album.commitAlbum(x);
+                    album.removePhoto(s);
+
+                    s = null;
+                    selected = null;
+
+                    imageTable.getChildren().clear();
+
+                    for (Photo p : album.getPhotos())
+                    {
+                        imageTable.getChildren().addAll(createTile(p));
+                    }
+
+                    Album.commitAlbum(album);
+
+                }
+                else
+                {
+                    showError("No Selection", "No Photo Selected", "You must select a photo to move");
+                }
+            });
+
+                        /*
+            If the album name is not equal to the current album then add that to the move to menu list
+             */
+            if (!x.equals(album))
+                moveToMenu.getItems().add(m);
+        }
+    }
+    public void copyTo()
+    {
+        for (Album x : Album.getAlbumList(user))
+        {
+            MenuItem m = new MenuItem(x.getName());
+            m.setOnAction(event ->
+            {
+                if (s != null)
+                {
+                    x.addPhoto(s);
+
+                    Album.commitAlbum(x);
+
+                    s = null;
+                    selected = null;
+
+                    imageTable.getChildren().clear();
+
+                    for (Photo p : album.getPhotos())
+                    {
+                        imageTable.getChildren().addAll(createTile(p));
+                    }
+
+                    Album.commitAlbum(album);
+
+                }
+                else
+                {
+                    showError("No Selection", "No Photo Selected", "You must select a photo to move");
+                }
+            });
+            
+                        /*
+            If the album name is not equal to the current album then add that to the move to menu list
+             */
+            if (!x.equals(album))
+                copyToMenu.getItems().add(m);
+        }
+    }
+
 
 }

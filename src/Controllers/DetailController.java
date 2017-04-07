@@ -189,7 +189,6 @@ public class DetailController
                 e.getValue().forEach(x -> tempList.add(new Pair<>(e.getKey(), x)));
             }
 
-
             data = FXCollections.observableArrayList(tempList);
 
             keyCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getKey()));
@@ -213,11 +212,11 @@ public class DetailController
          */
         Optional<String> result = dialog.showAndWait();
 
-        if (!result.isPresent() || result.get().trim().length() == 0)
+        if (result.isPresent() && result.get().trim().length() == 0)
         {
             Photos.showError("Blank caption", "Blank caption entered", "Cannot enter a blank caption");
         }
-        else
+        else if (result.isPresent())
         {
             photo.setName(result.get());
             album.addPhoto(photo);

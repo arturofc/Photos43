@@ -30,10 +30,8 @@
               <items>
               </items>
             </MenuButton>
-            <MenuButton mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Copy from">
+            <MenuButton fx:id="copyToMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Copy to">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
