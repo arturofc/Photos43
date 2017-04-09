@@ -4,6 +4,7 @@ import Models.Album;
 import Models.User;
 import application.AlbumLauncher;
 import application.Photos;
+import application.SearchLauncher;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -200,7 +201,19 @@ public class UserController
             alert.close();
         }
     }
-
+    
+    /**
+     * Search Photos by Tag
+     * @param event the button event
+     * @throws IOException 
+     */
+    public void search(ActionEvent event) throws IOException {
+    	
+    	// start the Search interface
+    	SearchLauncher.start(owner, s);
+    	
+    }
+    
     /**
      * Open the album
      *
