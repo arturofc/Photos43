@@ -90,6 +90,7 @@ public class AlbumController
          */
         for (Photo p : album.getPhotos())
         {
+            if (createTile(p) != null)
             imageTable.getChildren().addAll(createTile(p));
         }
 
@@ -109,6 +110,7 @@ public class AlbumController
 
             for (Photo p : album.getPhotos())
             {
+                if (createTile(p) != null)
                 imageTable.getChildren().addAll(createTile(p));
             }
         });
@@ -177,7 +179,8 @@ public class AlbumController
 
             for (Photo p : album.getPhotos())
             {
-                imageTable.getChildren().addAll(createTile(p));
+                if (createTile(p) != null)
+                    imageTable.getChildren().addAll(createTile(p));
             }
 
             Album.commitAlbum(album);
@@ -216,7 +219,16 @@ public class AlbumController
             /*
             Image File
              */
-            Image i = new Image(new FileInputStream(p.getPhotoFile()), 500, 500, true, true);
+
+            Image i;
+
+            if (p.getPhotoFile().exists())
+                i = new Image(new FileInputStream(p.getPhotoFile()), 500, 500, true, true);
+            else
+            {
+                return null;
+            }
+
 
             /*
             Photo label
@@ -340,6 +352,7 @@ public class AlbumController
 
             for (Photo p : album.getPhotos())
             {
+                if (createTile(p) != null)
                 imageTable.getChildren().addAll(createTile(p));
             }
 
@@ -385,6 +398,7 @@ public class AlbumController
 
                     for (Photo p : album.getPhotos())
                     {
+                        if (createTile(p) != null)
                         imageTable.getChildren().addAll(createTile(p));
                     }
 
@@ -424,6 +438,7 @@ public class AlbumController
 
                     for (Photo p : album.getPhotos())
                     {
+                        if (createTile(p) != null)
                         imageTable.getChildren().addAll(createTile(p));
                     }
 
