@@ -25,11 +25,9 @@ public class SearchLauncher {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(UserLauncher.class.getResource("/view/Search.fxml"));
         AnchorPane root = loader.load();
-
-       // AlbumController aCont = loader.getController();
-        //aCont.init(u, a, s);
-        
+       
         SearchController sCont = loader.getController();
+        sCont.init(u, s);
 
         s.setTitle("Search");
         s.setScene(new Scene(root));
