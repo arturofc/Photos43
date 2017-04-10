@@ -30,7 +30,6 @@ public class SearchLauncher {
         //aCont.init(u, a, s);
         
         SearchController sCont = loader.getController();
-        sCont.init(u, s);
 
         s.setTitle("Search");
         s.setScene(new Scene(root));
