@@ -1,6 +1,7 @@
 package application;
 
 import Controllers.AdminController;
+import Models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -19,14 +20,14 @@ public class AdminLauncher
      *
      * @throws IOException throws an IO Exception.
      */
-    public static void start() throws IOException
+    public static void start(User u) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(AdminLauncher.class.getResource("/view/Admin.fxml"));
         BorderPane root = loader.load();
 
         AdminController aCont = loader.getController();
-        aCont.init();
+        aCont.init(u);
 
         Stage primaryStage = new Stage();
 

@@ -45,11 +45,13 @@ public class AdminController
     @FXML
     private TableView<User> userTable = new TableView<>();
 
+    private User owner;
+
 
     /**
      * Init the admin panel
      */
-    public void init()
+    public void init(User u)
     {
         data = FXCollections.observableArrayList(User.getUserList());
 
@@ -58,6 +60,8 @@ public class AdminController
          */
         usernameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getUsername()));
         passwordCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPassword()));
+
+        owner = u;
 
         userTable.setItems(data);
 
@@ -92,6 +96,11 @@ public class AdminController
             invalidInput.setHeaderText("No user selected");
             invalidInput.setContentText("Make sure you have a user selected to delete");
             invalidInput.showAndWait();
+            return;
+        }
+        else if (userTable.getSelectionModel().getSelectedItem().equals(owner))
+        {
+            Photos.showError("Deleting Self", "Selected yourself", "Cannot delete yourself");
             return;
         }
 
@@ -146,7 +155,7 @@ public class AdminController
         {
             try
             {
-                AdminLauncher.start();
+                AdminLauncher.start(owner);
             }
             catch (IOException e)
             {
@@ -166,7 +175,7 @@ public class AdminController
     public void closeAddUser(ActionEvent event) throws IOException
     {
         ((Node) (event.getSource())).getScene().getWindow().hide();
-        AdminLauncher.start();
+        AdminLauncher.start(owner);
     }
 
     /**
@@ -219,7 +228,7 @@ public class AdminController
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
 
-        AdminLauncher.start();
+        AdminLauncher.start(owner);
 
     }
 

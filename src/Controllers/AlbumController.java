@@ -91,7 +91,11 @@ public class AlbumController
         for (Photo p : album.getPhotos())
         {
             if (createTile(p) != null)
-            imageTable.getChildren().addAll(createTile(p));
+                imageTable.getChildren().addAll(createTile(p));
+            else
+            {
+                showError("Photo not found", "Photo not found", p.getName() + " could not be found. Please re-add to album");
+            }
         }
 
         albumLabel.setText(album.getName());
@@ -103,15 +107,18 @@ public class AlbumController
          */
         stg.focusedProperty().addListener((observable, oldValue, newValue) ->
         {
-            s = null;
-            selected = null;
-
-            imageTable.getChildren().clear();
-
-            for (Photo p : album.getPhotos())
+            if (newValue)
             {
-                if (createTile(p) != null)
-                imageTable.getChildren().addAll(createTile(p));
+                s = null;
+                selected = null;
+
+                imageTable.getChildren().clear();
+
+                for (Photo p : album.getPhotos())
+                {
+                    if (createTile(p) != null)
+                        imageTable.getChildren().addAll(createTile(p));
+                }
             }
         });
 
@@ -222,10 +229,12 @@ public class AlbumController
 
             Image i;
 
+            /* check if image file actually still exists */
             if (p.getPhotoFile().exists())
                 i = new Image(new FileInputStream(p.getPhotoFile()), 500, 500, true, true);
             else
             {
+                /* get current album and all the photos */
                 return null;
             }
 

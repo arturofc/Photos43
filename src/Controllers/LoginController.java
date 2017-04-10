@@ -74,7 +74,7 @@ public class LoginController
             try
             {
                 UserLauncher.start(u, s);
-                AdminLauncher.start();
+                AdminLauncher.start(u);
 
             }
             catch (IOException e)
