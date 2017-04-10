@@ -461,7 +461,11 @@ public class AlbumController
             s = null;
             selected = null;
             ArrayList<Node> tImgList = new ArrayList<>();
-            for (Photo p : pSet)
+            
+            HashSet<Photo> tempSet = new HashSet<>();
+            tempSet.addAll(pSet);
+            
+            for (Photo p : tempSet)
             {
                 if (createTile(p) != null)
                     tImgList.add(createTile(p));
