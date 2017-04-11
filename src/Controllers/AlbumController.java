@@ -7,16 +7,15 @@ import application.DetailLauncher;
 import application.Photos;
 import application.SlideshowLauncher;
 import application.UserLauncher;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -34,6 +33,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static application.Photos.showError;
@@ -56,7 +56,7 @@ public class AlbumController
 
     private User user;
     private Album album;
-    //private boolean selected = false;
+
     private BooleanProperty selected = null;
     private Photo s = null;
     private Stage stg;
@@ -83,20 +83,11 @@ public class AlbumController
         imageTable.setHgap(15);
 
 
-
         /*
         From the global album variable, run get photos and get the set
         Create imageView and add to the imageTable
          */
-        for (Photo p : album.getPhotos())
-        {
-            if (createTile(p) != null)
-                imageTable.getChildren().addAll(createTile(p));
-            else
-            {
-                showError("Photo not found", "Photo not found", p.getName() + " could not be found. Please re-add to album");
-            }
-        }
+        updateTiles(true);
 
         albumLabel.setText(album.getName());
 
@@ -109,16 +100,7 @@ public class AlbumController
         {
             if (newValue)
             {
-                s = null;
-                selected = null;
-
-                imageTable.getChildren().clear();
-
-                for (Photo p : album.getPhotos())
-                {
-                    if (createTile(p) != null)
-                        imageTable.getChildren().addAll(createTile(p));
-                }
+                updateTiles(false);
             }
         });
 
@@ -176,19 +158,27 @@ public class AlbumController
          */
         if (f != null)
         {
+            /*
+            Get the photos
+             */
             HashSet<Photo> pSet = album.getPhotos();
+
+            /*
+            Get the last modified date
+             */
             LocalDate l = Instant.ofEpochMilli(f.lastModified()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+            /*
+            Add a new photo using the get name, the file pointer and the date
+             */
             pSet.add(new Photo(f.getName(), f, l));
 
+            /*
+            Set the album photos
+             */
             album.setPhotos(pSet);
 
-            imageTable.getChildren().clear();
-
-            for (Photo p : album.getPhotos())
-            {
-                if (createTile(p) != null)
-                    imageTable.getChildren().addAll(createTile(p));
-            }
+            updateTiles(false);
 
             Album.commitAlbum(album);
         }
@@ -350,26 +340,20 @@ public class AlbumController
             HashSet<Photo> pSet = album.getPhotos();
             pSet.remove(s);
 
-            /*
-            Set selected to null
-             */
-            s = null;
-            selected = null;
-
             album.setPhotos(pSet);
-            imageTable.getChildren().clear();
 
-            for (Photo p : album.getPhotos())
-            {
-                if (createTile(p) != null)
-                imageTable.getChildren().addAll(createTile(p));
-            }
+            updateTiles(false);
 
             Album.commitAlbum(album);
         }
     }
 
 
+    /**
+     * Detail panel where you add keys
+     * @param event the button event
+     * @throws IOException the exception that can get thrown
+     */
     public void details(ActionEvent event) throws IOException
     {
         if (imageTable.getChildren().isEmpty())
@@ -386,6 +370,9 @@ public class AlbumController
         }
     }
 
+    /**
+     * Move to an album
+     */
     public void moveTo()
     {
         for (Album x : Album.getAlbumList(user))
@@ -400,16 +387,7 @@ public class AlbumController
                     Album.commitAlbum(x);
                     album.removePhoto(s);
 
-                    s = null;
-                    selected = null;
-
-                    imageTable.getChildren().clear();
-
-                    for (Photo p : album.getPhotos())
-                    {
-                        if (createTile(p) != null)
-                        imageTable.getChildren().addAll(createTile(p));
-                    }
+                    updateTiles(false);
 
                     Album.commitAlbum(album);
 
@@ -427,6 +405,10 @@ public class AlbumController
                 moveToMenu.getItems().add(m);
         }
     }
+
+    /**
+     * Copy to an album
+     */
     public void copyTo()
     {
         for (Album x : Album.getAlbumList(user))
@@ -440,16 +422,7 @@ public class AlbumController
 
                     Album.commitAlbum(x);
 
-                    s = null;
-                    selected = null;
-
-                    imageTable.getChildren().clear();
-
-                    for (Photo p : album.getPhotos())
-                    {
-                        if (createTile(p) != null)
-                        imageTable.getChildren().addAll(createTile(p));
-                    }
+                    updateTiles(false);
 
                     Album.commitAlbum(album);
 
@@ -460,12 +433,50 @@ public class AlbumController
                 }
             });
 
-                        /*
+            /*
             If the album name is not equal to the current album then add that to the move to menu list
              */
             if (!x.equals(album))
                 copyToMenu.getItems().add(m);
         }
+    }
+
+    /**
+     * Updates the tiles in the background
+     * @param showError whether or not to show a missing photo error
+     */
+    public void updateTiles(Boolean showError)
+    {
+        HashSet<Photo> pSet = album.getPhotos();
+
+
+        new Thread(() ->
+        {
+            s = null;
+            selected = null;
+            ArrayList<Node> tImgList = new ArrayList<>();
+            for (Photo p : pSet)
+            {
+                if (createTile(p) != null)
+                    tImgList.add(createTile(p));
+
+            }
+
+            Platform.runLater(() ->
+            {
+                imageTable.getChildren().clear();
+                imageTable.getChildren().addAll(tImgList);
+
+                if (showError)
+                {
+                    for (Photo p: pSet)
+                    {
+                        if (!(p.getPhotoFile().exists()))
+                            showError("Photo not found", "Photo not found", p.getPhotoFile().getName() + " could not be found. Please re-add to album");
+                    }
+                }
+            });
+        }).start();
     }
 
 
