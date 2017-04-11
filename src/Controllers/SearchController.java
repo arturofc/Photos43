@@ -61,6 +61,7 @@ public class SearchController {
 		for(int i = 0; i < tagTable.getItems().size(); i++){
 			if(tagPair.equals(tagTable.getItems().get(i))){
 				Photos.showError("Invalid search tag", "Tag is already in the search options", "Must add unique tags to search options");
+				return;
 			}
 		}
 	  
