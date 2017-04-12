@@ -103,6 +103,17 @@ public class SearchController {
         
 	}
 	
+	public void removeSearchTag(ActionEvent event){
+		Pair<String, String> tagPair = tagTable.getSelectionModel().getSelectedItem();
+		
+		if( tagPair == null){
+			Photos.showError("No selection", "No key : value selected", "Please selected a key : value to remove");
+			return;
+		}
+		
+		tagTable.getItems().remove(tagPair);
+	}
+	
 	public void search(ActionEvent event){
 		
 		searchResults.clear();
