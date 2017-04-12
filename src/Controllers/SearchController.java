@@ -143,15 +143,19 @@ public class SearchController {
 		 * get all the photos that match the search criteria
 		 */
 		
-		// TODO: dont allow the user to set start > end!
-		
 		// grab dates if user specified them, if not set the min and max dates as the range
 		LocalDate start = startDate.getValue() != null? startDate.getValue() : Collections.min(dates);
-		LocalDate end = endDate.getValue() != null? startDate.getValue() : Collections.max(dates);
+		LocalDate end = endDate.getValue() != null? endDate.getValue() : Collections.max(dates);
+		
+		// make sure the format of the date range is correct
+		if(start.isAfter(end)){
+			Photos.showError("Invalid Dates", "Invalid Date Range", "Please select a date range in which the start date is before the end date");
+			return;
+		}
 		
 		for(Photo p: userPhotos){
 			Boolean matched = true;
-			if((p.getDate().isAfter(start) || p.getDate().equals(end)) && (p.getDate().isBefore(end) || p.getDate().isEqual(end))){
+			if((p.getDate().isAfter(start) || p.getDate().equals(start)) && (p.getDate().isBefore(end) || p.getDate().isEqual(end))){
 				HashMap<String,HashSet<String>> tags = p.getTags();
 				for(int i = 0; i < tagTable.getItems().size(); i++){
 					Pair<String, String> searchTag = tagTable.getItems().get(i);
