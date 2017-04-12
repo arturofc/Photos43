@@ -136,6 +136,7 @@ public class Photos extends Application
         Album.commitAlbum(a);
         */
 
+
         launch(args);
     }
 

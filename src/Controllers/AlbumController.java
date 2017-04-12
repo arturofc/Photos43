@@ -375,7 +375,9 @@ public class AlbumController
      */
     public void moveTo()
     {
-        for (Album x : Album.getAlbumList(user))
+        ArrayList<Album> aList = Album.getAlbumList(user);
+        moveToMenu.getItems().clear();
+        for (Album x : aList)
         {
             MenuItem m = new MenuItem(x.getName());
             m.setOnAction(event ->
@@ -390,6 +392,10 @@ public class AlbumController
                     updateTiles(false);
 
                     Album.commitAlbum(album);
+
+                    moveTo();
+                    copyTo();
+
 
                 }
                 else
@@ -411,7 +417,9 @@ public class AlbumController
      */
     public void copyTo()
     {
-        for (Album x : Album.getAlbumList(user))
+        ArrayList<Album> aList = Album.getAlbumList(user);
+        copyToMenu.getItems().clear();
+        for (Album x : aList)
         {
             MenuItem m = new MenuItem(x.getName());
             m.setOnAction(event ->
@@ -419,12 +427,10 @@ public class AlbumController
                 if (s != null)
                 {
                     x.addPhoto(s);
-
                     Album.commitAlbum(x);
 
-                    updateTiles(false);
-
-                    Album.commitAlbum(album);
+                    copyTo();
+                    moveTo();
 
                 }
                 else
