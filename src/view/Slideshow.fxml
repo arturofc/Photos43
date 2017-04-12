@@ -13,7 +13,6 @@
       <HBox id="slideshowHbox" alignment="CENTER" prefHeight="75.0" spacing="20.0" style="-fx-background-color: '#FFFFFF';" BorderPane.alignment="CENTER">
          <children>
             <Button id="slideshowBackArrow" mnemonicParsing="false" onAction="#back" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Play" />
             <Button id="slideshowForwardArrow" mnemonicParsing="false" onAction="#forward" prefHeight="50.0" prefWidth="100.0" />
          </children></HBox>
    </bottom>
