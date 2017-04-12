@@ -139,11 +139,7 @@ public class SearchController {
 			dates.add(p.getDate());
 		}
 		
-		/*
-		 * get all the photos that match the search criteria
-		 */
-		
-		// grab dates if user specified them, if not set the min and max dates as the range
+		// grab date range if user specified it, if not set the min and max dates as the range
 		LocalDate start = startDate.getValue() != null? startDate.getValue() : Collections.min(dates);
 		LocalDate end = endDate.getValue() != null? endDate.getValue() : Collections.max(dates);
 		
@@ -153,6 +149,9 @@ public class SearchController {
 			return;
 		}
 		
+		/*
+		 * get all the photos that match the search criteria
+		 */
 		for(Photo p: userPhotos){
 			Boolean matched = true;
 			if((p.getDate().isAfter(start) || p.getDate().equals(start)) && (p.getDate().isBefore(end) || p.getDate().isEqual(end))){
@@ -184,14 +183,11 @@ public class SearchController {
 			}
 		}
 		
-		
+		// display the search results
 		searchResultsPane.getChildren().clear();
 		for(Photo p: searchResults){
 			searchResultsPane.getChildren().add(createTile(p));
 		}
-		
-		
-		
 		
 	}
 	
