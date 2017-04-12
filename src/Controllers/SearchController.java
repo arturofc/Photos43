@@ -116,20 +116,17 @@ public class SearchController {
 		for (Album a: albums){
 			tmp = a.getPhotos();
 			for(Photo p: tmp){
-				//System.out.println(p.getName());
 				userPhotos.add(p);
 			}
 		}
 		
 		/*
-		 * grab all of the Photo dates and tags
+		 * grab all of the Photo dates
 		 */
 		ArrayList<LocalDate> dates = new ArrayList<>();
 		for(Photo p: userPhotos){
 			dates.add(p.getDate());
 		}
-		
-		//System.out.println(dates);
 		
 		/*
 		 * get all the photos that match the search criteria
@@ -137,21 +134,41 @@ public class SearchController {
 		
 		// TODO: dont allow the user to set start > end!
 		
-		// grab dates if user specified them, if not grab the min or max dates
+		// grab dates if user specified them, if not set the min and max dates as the range
 		LocalDate start = startDate.getValue() != null? startDate.getValue() : Collections.min(dates);
 		LocalDate end = endDate.getValue() != null? startDate.getValue() : Collections.max(dates);
 		
-		// grab tags if user specified them
-		
-		
 		for(Photo p: userPhotos){
+			Boolean matched = true;
 			if((p.getDate().isAfter(start) || p.getDate().equals(end)) && (p.getDate().isBefore(end) || p.getDate().isEqual(end))){
+				HashMap<String,HashSet<String>> tags = p.getTags();
+				for(int i = 0; i < tagTable.getItems().size(); i++){
+					Pair<String, String> searchTag = tagTable.getItems().get(i);
+					HashSet<String> value = tags.get(searchTag.getKey());
+					if(value == null){
+						// the key of the search tag does not exist in the photo
+						matched = false;
+						break;
+					}
+					System.out.println(value);
+					System.out.println(searchTag.getValue());
+					if(!value.contains(searchTag.getValue())){
+						// the value of the search tag does not match with the corresponding key in the photo
+						matched = false;
+						break;
+					}
+						
+				} // if the table is blank (size 0), the user has not specified a tag to search by and thus tags should be ignored
+			}else{
+				matched = false;
+			}
+			
+			if(matched){
+				// only add the photo to the search results if it matches all the specified criteria
 				searchResults.add(p);
 			}
 		}
 		
-		//HashSet<Photo> results = new HashSet<>();
-		//results.addAll(searchResults);
 		
 		searchResultsPane.getChildren().clear();
 		for(Photo p: searchResults){
@@ -249,7 +266,7 @@ public class SearchController {
 	 */
 	public void newAlbum(ActionEvent event){
 		if(searchResults.isEmpty()){
-			Photos.showError("No Results","No Results", "fam");
+			Photos.showError("No Results","Cannot Create the Album", "There must be search results to create a new album with");
 			return;
 		}
 		
@@ -257,9 +274,9 @@ public class SearchController {
         Create a text input dialog
          */
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename");
-        dialog.setHeaderText("Rename Album");
-        dialog.setContentText("Enter a new album name");
+        dialog.setTitle("New Album");
+        dialog.setHeaderText("Create a Album");
+        dialog.setContentText("Enter the new album's name");
         /*
         Wait for results
          */
@@ -286,7 +303,7 @@ public class SearchController {
          */
         else if (result.isPresent() && Album.doesAlbumNameExist(result.get(), user))
         {
-            showError("Duplicate", "Duplicate album", "Cannot rename an album that is a duplicate name");
+            showError("Duplicate Album", "Album already exists", "Cannot create an album with the same name as an exsisting album");
             return;
         }
         
