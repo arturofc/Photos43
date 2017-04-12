@@ -183,7 +183,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error getting user list returning empty list");
+            //System.out.println("Error getting user list returning empty list");
             return users;
         }
 
@@ -253,7 +253,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error pulling old Users " + e.toString());
+            //System.out.println("Error pulling old Users " + e.toString());
         }
 
         /*
@@ -263,7 +263,7 @@ public class User implements Serializable
         {
             uL.remove(u);
             uL.add(u);
-            System.out.println("Username already exists, overwriting old user");
+            //System.out.println("Username already exists, overwriting old user");
         }
         else
         {
@@ -316,7 +316,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error checking username and password " + e.toString());
+            //System.out.println("Error checking username and password " + e.toString());
             return false;
         }
     }
@@ -370,7 +370,7 @@ public class User implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error removing user " + e.toString());
+            //System.out.println("Error removing user " + e.toString());
             return false;
         }
 
@@ -391,7 +391,7 @@ public class User implements Serializable
         }
         catch (IOException e)
         {
-            System.out.println("Error storing updated user list while trying to remove " + e.toString());
+            //System.out.println("Error storing updated user list while trying to remove " + e.toString());
             return false;
         }
     }
@@ -426,13 +426,13 @@ public class User implements Serializable
             }
             catch (ClassNotFoundException | IOException e)
             {
-                System.out.println("Error getting and returning user: " + e.toString());
+                //System.out.println("Error getting and returning user: " + e.toString());
                 return Optional.empty();
             }
         }
         else
         {
-            System.out.println("Username does not exist");
+            //System.out.println("Username does not exist");
             return Optional.empty();
         }
     }

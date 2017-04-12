@@ -36,12 +36,12 @@
                   <Insets bottom="5.0" />
                </padding>
               </Label>
-            <Button mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="65.0" text="Search" />
-              <Button mnemonicParsing="false" onAction="#newAlbum" prefHeight="39.0" prefWidth="63.0" text="New" />
-              <Button mnemonicParsing="false" onAction="#rename" prefHeight="39.0" prefWidth="81.0" text="Rename" />
-              <Button mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
-            <Button mnemonicParsing="false" onAction="#open" prefHeight="39.0" prefWidth="67.0" text="Open" />
-              <Button mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
+            <Button minWidth="61.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="65.0" text="Search" />
+              <Button minWidth="59.0" mnemonicParsing="false" onAction="#newAlbum" prefHeight="39.0" prefWidth="63.0" text="New" />
+              <Button minWidth="77.0" mnemonicParsing="false" onAction="#rename" prefHeight="39.0" prefWidth="81.0" text="Rename" />
+              <Button minWidth="71.0" mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
+            <Button minWidth="63.0" mnemonicParsing="false" onAction="#open" prefHeight="39.0" prefWidth="67.0" text="Open" />
+              <Button minWidth="71.0" mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
          </children>
          <padding>
             <Insets top="20.0" />

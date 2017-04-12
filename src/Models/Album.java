@@ -231,7 +231,7 @@ public class Album implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error getting album list for User u, returning empty list");
+            //System.out.println("Error getting album list for User u, returning empty list");
             return albums;
         }
     }
@@ -262,7 +262,7 @@ public class Album implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error pulling old Albums " + e.toString());
+            //System.out.println("Error pulling old Albums " + e.toString());
         }
 
         /*
@@ -272,7 +272,7 @@ public class Album implements Serializable
         {
             aL.remove(a);
             aL.add(a);
-            System.out.println("Album already exists, overwriting old album");
+            //System.out.println("Album already exists, overwriting old album");
         }
         else
         {
@@ -378,7 +378,7 @@ public class Album implements Serializable
         }
         catch (ClassNotFoundException | IOException e)
         {
-            System.out.println("Error removing album (Opening album list) " + e.toString());
+            //System.out.println("Error removing album (Opening album list) " + e.toString());
             return false;
         }
 
@@ -399,7 +399,7 @@ public class Album implements Serializable
         }
         catch (IOException e)
         {
-            System.out.println("Error storing updated album list while trying to remove " + e.toString());
+            //System.out.println("Error storing updated album list while trying to remove " + e.toString());
             return false;
         }
     }

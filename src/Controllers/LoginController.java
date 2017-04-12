@@ -32,7 +32,7 @@ public class LoginController
     {
         s = stage;
 
-        System.out.println("LoginLauncher Controller started");
+        //System.out.println("LoginLauncher Controller started");
     }
 
     /**

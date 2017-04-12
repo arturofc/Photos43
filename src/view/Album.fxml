@@ -22,20 +22,20 @@
                   <Insets left="35.0" />
                </HBox.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#pickImage" prefHeight="39.0" prefWidth="50.0" text="New" />
-            <Button mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="75.0" text="Details" />
-            <Button mnemonicParsing="false" onAction="#slideshow" prefHeight="39.0" prefWidth="75.0" text="Slideshow" />
-            <Button mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
-            <MenuButton fx:id="moveToMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Move to">
+            <Button minWidth="45.0" mnemonicParsing="false" onAction="#pickImage" prefHeight="39.0" prefWidth="50.0" text="New" />
+            <Button minWidth="70.0" mnemonicParsing="false" onAction="#details" prefHeight="39.0" prefWidth="75.0" text="Details" />
+            <Button minWidth="70.0" mnemonicParsing="false" onAction="#slideshow" prefHeight="39.0" prefWidth="75.0" text="Slideshow" />
+            <Button minWidth="70.0" mnemonicParsing="false" onAction="#delete" prefHeight="39.0" prefWidth="75.0" text="Delete" />
+            <MenuButton fx:id="moveToMenu" minWidth="95.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Move to">
               <items>
               </items>
             </MenuButton>
-            <MenuButton fx:id="copyToMenu" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Copy to">
+            <MenuButton fx:id="copyToMenu" minWidth="95.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="100.0" text="Copy to">
               <items>
               </items>
             </MenuButton>
-            <Button mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
-            <Button mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="50.0" text="Back" />
+            <Button minWidth="70.0" mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="75.0" text="Logout" />
+            <Button minWidth="45.0" mnemonicParsing="false" onAction="#back" prefHeight="39.0" prefWidth="50.0" text="Back" />
          </children>
          <padding>
             <Insets top="15.0" />
@@ -43,7 +43,7 @@
       </HBox>
    </top>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefWidth="900.0" fitToHeight="true" style="-fx-background-color: '#FFFFFF';" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefWidth="900.0" style="-fx-background-color: '#FFFFFF';" BorderPane.alignment="CENTER">
          <content>
             <TilePane fx:id="imageTable" prefWidth="900.0" style="-fx-background-color: '#FFFFFF';" vgap="15.0" />
          </content>
