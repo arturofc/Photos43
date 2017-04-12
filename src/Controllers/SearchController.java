@@ -28,6 +28,10 @@ import java.util.*;
 
 import static application.Photos.showError;
 
+/**
+ * @author Calin Gilan
+ * @author Arturo Corro
+ */
 public class SearchController
 {
 
