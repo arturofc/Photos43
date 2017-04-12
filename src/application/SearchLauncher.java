@@ -18,7 +18,7 @@ public class SearchLauncher {
 	/**
 	 * Start Search Results panel
 	 * @param u user that is passed in when logged in
-	 * @param stage stage which will displayed to the user
+	 * @param s stage which will displayed to the user
 	 * @throws IOException 
 	 */
 	public static void start(User u, Stage s) throws IOException{

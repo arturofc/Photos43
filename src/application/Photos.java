@@ -71,6 +71,12 @@ public class Photos extends Application
         LoginLauncher.start();
     }
 
+    /**
+     * A global show error function making it easier to create errors
+     * @param t
+     * @param h
+     * @param c
+     */
     public static void showError(String t, String h, String c)
     {
         Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);

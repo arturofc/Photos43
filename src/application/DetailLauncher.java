@@ -17,6 +17,13 @@ import java.io.IOException;
  */
 public class DetailLauncher
 {
+    /**
+     * Launches the panel handling the photo details
+     * @param u the logged in user
+     * @param a the album youre in
+     * @param s the photo you are opening
+     * @throws IOException
+     */
     public static void start(User u, Album a, Photo s) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();

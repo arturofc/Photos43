@@ -2,9 +2,11 @@ package Models;
 
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * @author Calin Gilan
@@ -16,6 +18,12 @@ public class Album implements Serializable
     private HashSet<Photo> photos;
     private User owner;
 
+    /**
+     * Constructor
+     *
+     * @param name  the album name
+     * @param owner album owner
+     */
     public Album(String name, User owner)
     {
         this.name = name;
@@ -23,6 +31,13 @@ public class Album implements Serializable
         this.owner = owner;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name   the album name
+     * @param photos hashset of photos
+     * @param owner  the owner
+     */
     public Album(String name, HashSet<Photo> photos, User owner)
     {
         this.name = name;
@@ -30,6 +45,11 @@ public class Album implements Serializable
         this.owner = owner;
     }
 
+    /**
+     * Get a string of the date range of the photos
+     *
+     * @return the date range string
+     */
     public String getDateRange()
     {
         if (photoCount() == 0)
@@ -53,46 +73,94 @@ public class Album implements Serializable
         return d;
     }
 
+    /**
+     * The number of photos
+     *
+     * @return int size
+     */
     public int photoCount()
     {
         return getPhotos().size();
     }
 
+    /**
+     * The album name
+     *
+     * @return string name
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * Set the name
+     *
+     * @param name the new name
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     * Get all the photos
+     *
+     * @return the photos
+     */
     public HashSet<Photo> getPhotos()
     {
         return photos;
     }
 
+    /**
+     * Get the owner
+     *
+     * @return the user owner
+     */
     public User getOwner()
     {
         return owner;
     }
 
+    /**
+     * set the owner
+     *
+     * @param owner the owner
+     */
     public void setOwner(User owner)
     {
         this.owner = owner;
     }
 
 
+    /**
+     * Set all the photos
+     *
+     * @param photos the photos
+     */
     public void setPhotos(HashSet<Photo> photos)
     {
         this.photos = photos;
     }
 
+    /**
+     * Add a photo
+     *
+     * @param p the photo
+     * @return true if added false if not
+     */
     public boolean addPhoto(Photo p)
     {
         return this.photos.add(p);
     }
+
+    /**
+     * Remove a photo
+     *
+     * @param p photo to remove
+     * @return true if removed false if not
+     */
     public boolean removePhoto(Photo p)
     {
         return this.photos.remove(p);
@@ -118,6 +186,11 @@ public class Album implements Serializable
         return (this.name.equals(a.getName()) && this.owner.equals(a.getOwner()));
     }
 
+    /**
+     * The hashcode for album
+     *
+     * @return hashcode int
+     */
     @Override
     public int hashCode()
     {
@@ -129,6 +202,12 @@ public class Album implements Serializable
     ---------------------------------------
      */
 
+    /**
+     * All the albums for a user
+     *
+     * @param u the user
+     * @return an arraylist of all the albums
+     */
     public static ArrayList<Album> getAlbumList(User u)
     {
         ArrayList<Album> albums = new ArrayList<>();
@@ -157,6 +236,12 @@ public class Album implements Serializable
         }
     }
 
+    /**
+     * Save an album to disk
+     *
+     * @param a the album
+     * @return true if saved
+     */
     public static boolean commitAlbum(Album a)
     {
         HashSet<Album> aL = new HashSet<>();
@@ -210,6 +295,13 @@ public class Album implements Serializable
         }
     }
 
+    /**
+     * Does the album exist
+     *
+     * @param name the album name
+     * @param u    the owner
+     * @return true if exists false if no
+     */
     public static boolean doesAlbumNameExist(String name, User u)
     {
         try
@@ -229,6 +321,14 @@ public class Album implements Serializable
         }
     }
 
+    /**
+     * Rename an album
+     *
+     * @param a       album
+     * @param u       the owner
+     * @param newName the new name
+     * @return true if renamed false if not
+     */
     public static boolean renameAlbum(Album a, User u, String newName)
     {
         if (doesAlbumNameExist(newName, u))
@@ -255,6 +355,12 @@ public class Album implements Serializable
             return false;
     }
 
+    /**
+     * Delete an album
+     *
+     * @param a the album
+     * @return true if deleted false if not
+     */
     public static boolean deleteAlbum(Album a)
     {
         HashSet<Album> aL = new HashSet<>();

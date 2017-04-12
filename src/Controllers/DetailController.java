@@ -58,6 +58,12 @@ public class DetailController
     private Photo photo;
     private ObservableList<Pair<String, String>> data;
 
+    /**
+     * Inits the detail controllers
+     * @param u the user being passed in
+     * @param a album being passed in
+     * @param p photo being opened
+     */
     public void init(User u, Album a, Photo p)
     {
             try
@@ -95,6 +101,10 @@ public class DetailController
 
     }
 
+    /**
+     * Add a key value pair
+     * @param event the button event
+     */
     public void addKey(ActionEvent event)
     {
         /*
@@ -162,6 +172,10 @@ public class DetailController
 
     }
 
+    /**
+     * Remove a key value pair
+     * @param event
+     */
     public void removeKey(ActionEvent event)
     {
         if(keyValTable.getSelectionModel().getSelectedItem() == null)
@@ -198,6 +212,10 @@ public class DetailController
         }
     }
 
+    /**
+     * Edit photo caption
+     * @param event the button event
+     */
     public void editCaption(ActionEvent event)
     {
                /*
