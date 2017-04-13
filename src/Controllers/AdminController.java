@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Album;
 import Models.User;
 import application.AdminLauncher;
 import application.Photos;
@@ -7,16 +8,13 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -118,6 +116,11 @@ public class AdminController
             if (remove != data.size() - 1)
             {
                 userTable.getSelectionModel().selectNext();
+            }
+
+            for (Album x : Album.getAlbumList(User.getUserList().get(remove)))
+            {
+                Album.deleteAlbum(x);
             }
             User.deleteUser(User.getUserList().get(remove));
             data.remove(remove);
